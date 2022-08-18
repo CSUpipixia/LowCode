@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, provide } from "vue";
+import { computed, defineComponent, ref, provide, onMounted } from "vue";
 import './editor.scss';
 import EditorBlock from './editor-block';
 import deepcopy from "deepcopy";
@@ -16,12 +16,13 @@ export default defineComponent({
         modelValue: { type: Object },
         formData: { type: Object }
     },
-    emits: ['update:modelValue'], // 要触发的时间
+    emits: ['update:modelValue'], // 要触发的时间 下面事件触发会有提示
     setup(props, ctx) {
+       
         // 预览的时候 内容不能在操作了 ，可以点击 输入内容 方便看效果
         const previewRef = ref(false);
         const editorRef = ref(true);
-
+        //监听画布的尺寸 和 渲染组件的尺寸
         const data = computed({
             get() {
                 return props.modelValue
@@ -30,6 +31,8 @@ export default defineComponent({
                 ctx.emit('update:modelValue', deepcopy(newValue))
             }
         });
+        console.log('data',data);
+        //画布容器的宽高
         const containerStyles = computed(() => ({
             width: data.value.container.width + 'px',
             height: data.value.container.height + 'px'
@@ -38,7 +41,7 @@ export default defineComponent({
         // 注入物料配置
         provide('config', config); // 将组件的配置直接传值
 
-        const containerRef = ref(null);
+        const containerRef = ref(null);//拖拽的dom元素
 
         // 1.实现菜单的拖拽功能
         const { dragstart, dragend } = useMenuDragger(containerRef, data);
@@ -49,7 +52,7 @@ export default defineComponent({
             mousedown(e)
         });
         
-        // 2.实现组件拖拽
+        // 2.实现组件容器内 拖拽
         let { mousedown, markLine } = useBlockDragger(focusData, lastSelectBlock, data);
 
         const { commands } = useCommand(data, focusData); // []

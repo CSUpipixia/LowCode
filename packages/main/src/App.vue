@@ -12,9 +12,11 @@ import Range from './components/Range.jsx'
 export default {
   components:{
     Editor,
-    Range
+    Range,
+   
   },
   setup(){
+    //为啥不用reactive 方便实现数据双向绑定，对象不好赋值
     const state = ref(data);
 
     const formData = ref({

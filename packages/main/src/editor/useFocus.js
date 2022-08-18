@@ -12,20 +12,22 @@ export function useFocus(data,previewRef,callback){ // 获取哪些元素被选�
         data.value.blocks.forEach(block => (block.focus ? focus : unfocused).push(block));
         return { focus, unfocused }
     });
+    //排他 点击容器让选中的失去焦点
     const clearBlockFocus = () => {
         data.value.blocks.forEach(block => block.focus = false);
     }
+    //点击组件的外的容器取消选中
     const containerMousedown = () => {
         if(previewRef.value) return
         clearBlockFocus(); // 点击容器让选中的失去焦点
         selectIndex.value = -1;
     }
     const blockMousedown = (e, block,index) => {
-        if(previewRef.value) return
+        if(previewRef.value) return 
         e.preventDefault();
         e.stopPropagation();
         // block上我们规划一个属性 focus 获取焦点后就将focus变为true
-        if (e.ctrlKey) {
+        if (e.shiftKey) {
             if(focusData.value.focus.length <=1) {
                 block.focus = true; // 当前只有一个节点被选中时 摁住shift键也不会切换focus状态
             }else{
@@ -35,7 +37,7 @@ export function useFocus(data,previewRef,callback){ // 获取哪些元素被选�
             if (!block.focus) {
                 clearBlockFocus();
                 block.focus = true; // 要清空其他人foucs属性
-            } // 当自己已经被选中了，在次点击时还是选中状态
+            } // 当自己已经被选中了，再次点击时还是选中状态
         }
         selectIndex.value = index;
         callback(e)

@@ -12,6 +12,7 @@ export default defineComponent({
     },
     setup(props, ctx) {
         const config = inject('config'); // 组件的配置信息
+
         const state = reactive({
             editData: {}
         })
@@ -36,17 +37,23 @@ export default defineComponent({
             if (!props.block) {
                 content.push(<>
                     <ElFormItem label="容器宽度">
-                        <ElInputNumber v-model={state.editData.width}></ElInputNumber>
+                        <ElInputNumber v-model={state.editData.width}>11</ElInputNumber>
                     </ElFormItem>
                     <ElFormItem label="容器高度">
                         <ElInputNumber v-model={state.editData.height}></ElInputNumber>
                     </ElFormItem>
                 </>)
             } else {
-                let component = config.componentMap[props.block.key];
+               
+                let component = config.componentMap[props.block.key];//拿到的是最后点击的单个组件
+                // console.log('component',component);
                 if (component && component.props) { // {text:{type:'xxx'},size:{},color:{}}
                     // {text:xxx,size:13px,color:#fff}
+                    // console.log('componet.props',component.props);
                     content.push(Object.entries(component.props).map(([propName, propConfig]) => {
+                        // console.log('propName',propName);
+                        // console.log('propConfig.type',propConfig.type);
+                        // console.log('state.editData.props[propName]',state.editData.props[propName]);
                         return <ElFormItem label={propConfig.label}>
                             {{
                                 input: () => <ElInput v-model={state.editData.props[propName]}></ElInput>,
@@ -56,7 +63,8 @@ export default defineComponent({
                                         return <ElOption label={opt.label} value={opt.value}></ElOption>
                                     })}
                                 </ElSelect>,
-                                table:()=> <TableEditor propConfig={propConfig} v-model={state.editData.props[propName]} ></TableEditor>
+                                table:()=> <TableEditor propConfig={propConfig} v-model={state.editData.props[propName]} ></TableEditor>,
+                                iptNumber:()=>  <ElInputNumber v-model={state.editData.props[propName]}></ElInputNumber>
                             }[propConfig.type]()}
                         </ElFormItem>
                     }))

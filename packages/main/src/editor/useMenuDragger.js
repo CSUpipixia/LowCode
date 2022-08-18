@@ -1,17 +1,23 @@
 import {events} from './events';
 export function useMenuDragger(containerRef, data){
+    console.log('当前点击的组件',containerRef);
+    //
     let currentComponent = null;
+    //dragenter当被鼠标拖动的对象进入其容器范围内时触发此事件
     const dragenter = (e) => {
         e.dataTransfer.dropEffect = 'move'; // h5拖动的图标
     }
+    //在dragover中一定要执行preventDefault()，否则ondrop事件不会被触发。？？？
     const dragover = (e) => {
         e.preventDefault();
     }
+    //dragleave当被鼠标拖动的对象离开其容器范围内时触发此事件
     const dragleave = (e) => {
         e.dataTransfer.dropEffect = 'none';
     }
+    //drop在一个拖动过程中，释放鼠标键时触发此事件
     const drop = (e) => {
-        // 先留在这
+       
         let blocks =  data.value.blocks; // 内部已经渲染的组件
         data.value = {...data.value,blocks:[
             ...blocks,

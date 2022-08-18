@@ -1,18 +1,22 @@
 import { computed, defineComponent, inject, onMounted, ref } from "vue";
 import BlockResize from './block-resize'
 export default defineComponent({
+    //从父组件editor index 收到的block 和formdata 渲染列表组件
     props: {
         block: { type: Object },
         formData: { type: Object }
     },
     setup(props) {
+        //计算属性 - 计算出需要渲染组件的宽高 block top left
+        // console.log('props.data',props.data);
         const blockStyles = computed(() => ({
             top: `${props.block.top}px`,
             left: `${props.block.left}px`,
             zIndex: `${props.block.zIndex}`
         }));
+        //注入editor-config 提供的config
         const config = inject('config');
-
+        //？？？
         const blockRef = ref(null)
         onMounted(() => {
             let { offsetWidth, offsetHeight } = blockRef.value;
