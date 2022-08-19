@@ -17,21 +17,15 @@ export default defineComponent({
     props: {
         formData: { type: Object }
     },
-    emits: ['update:modelValue'], // 要触发的时间
     setup(props, ctx) {
        
         // 预览的时候 内容不能在操作了 ，可以点击 输入内容 方便看效果
         const previewRef = ref(false);
         const editorRef = ref(true);
 
-        const data = computed({
-            get() {
-                return props.modelValue
-            },
-            set(newValue) {
-                ctx.emit('update:modelValue', deepcopy(newValue))
-            }
-        });
+        const { currentPageData, savePageData } = useEditorData()
+        const data = currentPageData
+
         const containerStyles = computed(() => ({
             width: data.value.container.width + 'px',
             height: data.value.container.height + 'px'

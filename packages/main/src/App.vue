@@ -15,8 +15,6 @@ export default {
    
   },
   setup(){
-    const state = ref(data);
-
     const formData = ref({
       username:'zfjg',
       password:123,
