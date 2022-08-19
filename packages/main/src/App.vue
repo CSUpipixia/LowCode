@@ -1,12 +1,11 @@
 <template>
   <div class="app">
-    <Editor v-model="state" :formData="formData"></Editor>
+    <Editor :formData="formData"></Editor>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue';
-import data from './data.json';
 import Editor from './editor/index';
 import Range from './components/Range.jsx'
 export default {
@@ -15,8 +14,6 @@ export default {
     Range
   },
   setup(){
-    const state = ref(data);
-
     const formData = ref({
       username:'zfjg',
       password:123,
@@ -25,7 +22,6 @@ export default {
     })
 
     return {
-      state,
       formData
     }
   }

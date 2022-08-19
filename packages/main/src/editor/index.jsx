@@ -11,25 +11,24 @@ import { $dropdown, DropdownItem } from "../components/Dropdown";
 import EditorOperator from "./editor-operator";
 import { ElButton } from "element-plus";
 import { registerConfig as config } from '@/utils/editor-config';
+import initData from '@/data.json';
+import { useEditorData } from './useEditorData'
 export default defineComponent({
     props: {
-        modelValue: { type: Object },
         formData: { type: Object }
     },
-    emits: ['update:modelValue'], // 要触发的时间
     setup(props, ctx) {
         // 预览的时候 内容不能在操作了 ，可以点击 输入内容 方便看效果
         const previewRef = ref(false);
         const editorRef = ref(true);
 
-        const data = computed({
-            get() {
-                return props.modelValue
-            },
-            set(newValue) {
-                ctx.emit('update:modelValue', deepcopy(newValue))
-            }
-        });
+        const { currentPageData, savePageData } = useEditorData();
+
+        // 页面数据
+        // const data = ref(initData);
+        const data = currentPageData;
+        console.log('pageData', data)
+
         const containerStyles = computed(() => ({
             width: data.value.container.width + 'px',
             height: data.value.container.height + 'px'
@@ -80,8 +79,6 @@ export default defineComponent({
             { label: '置顶', icon: 'icon-place-top', handler: () => commands.placeTop() },
             { label: '置底', icon: 'icon-place-bottom', handler: () => commands.placeBottom() },
             { label: '删除', icon: 'icon-delete', handler: () => commands.delete() },
-
-
             {
                 label: () => previewRef.value ? '编辑' : '预览', icon: () => previewRef.value ? 'icon-edit' : 'icon-browse', handler: () => {
                     previewRef.value = !previewRef.value;
@@ -90,8 +87,9 @@ export default defineComponent({
             },
             {
                 label: '关闭', icon: 'icon-close', handler: () => {
-                    editorRef.value = false;
-                    clearBlockFocus();
+                    // editorRef.value = false;
+                    // clearBlockFocus();
+                    savePageData();
                 }
             },
         ];

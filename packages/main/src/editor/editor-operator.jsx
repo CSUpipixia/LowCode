@@ -5,10 +5,10 @@ import TableEditor from "./table-editor";
 
 export default defineComponent({
     props: {
-        block: { type: Object }, // 用户最后选中的元素
+        block: { type: Object }, // 用户最后选中的组件
         data: { type: Object }, // 当前所有的数据
-        updateContainer:{type:Function},
-        updateBlock:{type:Function}
+        updateContainer: {type:Function},
+        updateBlock: {type:Function}
     },
     setup(props, ctx) {
         const config = inject('config'); // 组件的配置信息
@@ -33,6 +33,7 @@ export default defineComponent({
         watch(() => props.block, reset, { immediate: true })
         return () => {
             let content = []
+            // 没有选中数据，显示默认内容，容器宽度和容器高度
             if (!props.block) {
                 content.push(<>
                     <ElFormItem label="容器宽度">
@@ -48,6 +49,7 @@ export default defineComponent({
                     // {text:xxx,size:13px,color:#fff}
                     content.push(Object.entries(component.props).map(([propName, propConfig]) => {
                         return <ElFormItem label={propConfig.label}>
+                            {/* 根据 propConfig.type 匹配渲染设置框 */}
                             {{
                                 input: () => <ElInput v-model={state.editData.props[propName]}></ElInput>,
                                 color: () => <ElColorPicker v-model={state.editData.props[propName]}></ElColorPicker>,
@@ -63,7 +65,7 @@ export default defineComponent({
                 }
 
                 if(component && component.model){
-                    //                                                 default   标签名
+                    // default 标签名
                     content.push(Object.entries(component.model).map(([modelName,label])=>{
                         return <ElFormItem label={label}>
                             {/* model => {default:"username"} */}
