@@ -1,5 +1,5 @@
 import {computed, ref} from 'vue'
-export function useFocus(data,previewRef,callback){ // 获取哪些元素被选中了
+export function useFocus(data,previewRef,callback) { // 获取哪些元素被选中了
 
     const selectIndex = ref(-1); // 表示没有任何一个被选中
 

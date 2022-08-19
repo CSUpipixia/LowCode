@@ -6,7 +6,7 @@ export function useCommand(data, focusData) {
     const state = { // 前进后退需要指针
         current: -1, // 前进后退的索引值
         queue: [], //  存放所有的操作命令
-        commands: {}, // 制作命令和执行功能一个映射表  undo : ()=>{}  redo:()=>{}
+        commands: {}, // 制作命令和执行功能一个映射表  undo: ()=>{}  redo: ()=>{}
         commandArray: [], // 存放所有的命令
         destroyArray: []
     }
@@ -20,7 +20,7 @@ export function useCommand(data, focusData) {
             }
             let { queue, current } = state;
 
-            // 如果先放了 组件1 -》 组件2 => 组件3 =》 组件4 - -》 组件3
+            // 如果先放了 组件1 -> 组件2 => 组件3 => 组件4 - -> 组件3
             // 组件1 -> 组件3
             if (queue.length > 0) {
                 queue = queue.slice(0, current + 1); // 可能在放置的过程中有撤销操作，所以根据当前最新的current值来计算新的对了
@@ -31,7 +31,14 @@ export function useCommand(data, focusData) {
             console.log(queue);
         }
     }
-    // 注册我们需要的命令
+
+    /**
+     * 注册我们需要的命令
+     * name: 命令名
+     * keyboard: 快捷键
+     * execute: 执行方法逻辑，默认包含一个 redo 方法，执行时会调用 redo 方法进行操作
+     */ 
+    // 还原
     registry({
         name: 'redo',
         keyboard: 'ctrl+y',
@@ -47,6 +54,7 @@ export function useCommand(data, focusData) {
             }
         }
     })
+    // 撤销
     registry({
         name: 'undo',
         keyboard: 'ctrl+z',

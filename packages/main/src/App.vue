@@ -1,12 +1,11 @@
 <template>
   <div class="app">
-    <Editor v-model="state" :formData="formData"></Editor>
+    <Editor :formData="formData"></Editor>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue';
-import data from './data.json';
 import Editor from './editor/index';
 import Range from './components/Range.jsx'
 export default {
@@ -16,7 +15,6 @@ export default {
    
   },
   setup(){
-    //为啥不用reactive 方便实现数据双向绑定，对象不好赋值
     const state = ref(data);
 
     const formData = ref({
@@ -27,7 +25,6 @@ export default {
     })
 
     return {
-      state,
       formData
     }
   }
