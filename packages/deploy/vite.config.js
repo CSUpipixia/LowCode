@@ -7,13 +7,13 @@ import VueJsx from '@vitejs/plugin-vue-jsx'
 export default defineConfig({
   plugins: [vue(), VueJsx()],
   server: {
-    port: 8080
+    port: 8081
   },
   resolve: {
     alias: [
       {
         find: '@',
-        replacement: resolve(__dirname, './src')
+        replacement: resolve(__dirname, './src'),
       }
     ]
   }
