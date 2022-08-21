@@ -9,7 +9,7 @@ import { useCommand } from "./useCommand";
 import { $dialog } from "../components/Dialog";
 import { $dropdown, DropdownItem } from "../components/Dropdown";
 import EditorOperator from "./editor-operator";
-import { ElButton } from "element-plus";
+import { ElButton,ElTabs,ElTabPane } from "element-plus";
 import { registerConfig as config } from '@/utils/editor-config';
 import initData from '@/data.json';
 import { useEditorData } from './useEditorData'
@@ -25,12 +25,15 @@ export default defineComponent({
 
         const { currentPageData, savePageData } = useEditorData()
         const data = currentPageData
-
+        console.log('currentPageData',data.value);
         const containerStyles = computed(() => ({
             width: data.value.container.width + 'px',
-            height: data.value.container.height + 'px'
+            height: data.value.container.height + 'px',
+            background:data.value.container.background,
+            backgroundImage:data.value.container.url
         }))
-
+        // console.log('containerStyles.value',data.value);
+        console.log('index  containerStyles',data.value.container.backgroundColor);
         // 注入物料配置
         provide('config', config); // 将组件的配置直接传值
 
@@ -132,8 +135,8 @@ export default defineComponent({
                     (data.value.blocks.map((block, index) => (
                         <EditorBlock
                             class='editor-block-preview'
-                            block={block}
-                            formData={props.formData}
+                            block={block}//组件数据
+                            formData={props.formData}//data
                         ></EditorBlock>
                     )))
                 }
@@ -168,12 +171,23 @@ export default defineComponent({
                 })}
             </div>
             <div class="editor-right">
+            <ElTabs >
+            <ElTabPane label="属性" name="props">
                 <EditorOperator
-                    block={lastSelectBlock.value}
-                    data={data.value}
-                    updateContainer={commands.updateContainer}
-                    updateBlock={commands.updateBlock}
-                ></EditorOperator>
+                        block={lastSelectBlock.value}
+                        data={data.value}
+                        updateContainer={commands.updateContainer}
+                        updateBlock={commands.updateBlock}
+                    ></EditorOperator>
+            </ElTabPane>
+            <ElTabPane label="事件" name="events">
+              { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
+            </ElTabPane>
+            <ElTabPane label="动画" name="animates">
+              { lastSelectBlock.value ? <ElButton>fade效果</ElButton> : 'EmptyText' }
+            </ElTabPane>
+          </ElTabs>
+               
             </div>
             <div class="editor-container">
                 {/*  负责产生滚动条 */}
@@ -200,7 +214,7 @@ export default defineComponent({
 
                         {markLine.x !== null && <div class="line-x" style={{ left: markLine.x + 'px' }}></div>}
                         {markLine.y !== null && <div class="line-y" style={{ top: markLine.y + 'px' }}></div>}
-
+                        
                     </div>
                 </div>
             </div>

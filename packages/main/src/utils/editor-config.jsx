@@ -16,59 +16,14 @@ function createEditorConfig() {
         }
     }
 }
-/*const fontArr = [
-    { label: '宋体', value: 'SimSun' },
-    { label: '黑体', value: 'SimHei' },
-    { label: '微软雅黑', value: 'Microsoft Yahei' },
-    { label: '微软正黑体', value: 'Microsoft JhengHei' },
-    { label: '楷体', value: 'KaiTi' },
-    { label: '新宋体', value: 'NSimSun' },
-    { label: '仿宋', value: 'FangSong' },
-    { label: '苹方', value: 'PingFang SC' },
-    { label: '华文黑体', value: 'STHeiti' },
-    { label: '华文楷体', value: 'STKaiti' },
-    { label: '华文宋体', value: 'STSong' },
-    { label: '华文仿宋', value: 'STFangsong' },
-    { label: '华文中宋', value: 'STZhongsong' },
-    { label: '华文琥珀', value: 'STHupo' },
-    { label: '华文新魏', value: 'STXinwei' },
-    { label: '华文隶书', value: 'STLiti' },
-    { label: '华文行楷', value: 'STXingkai' },
-    { label: '冬青黑体简', value: 'Hiragino Sans GB' },
-    { label: '兰亭黑-简', value: 'Lantinghei SC' },
-    { label: '翩翩体-简', value: 'Hanzipen SC' },
-    { label: '手札体-简', value: 'Hannotate SC' },
-    { label: '宋体-简', value: 'Songti SC' },
-    { label: '娃娃体-简', value: 'Wawati SC' },
-    { label: '魏碑-简', value: 'Weibei SC' },
-    { label: '行楷-简', value: 'Xingkai SC' },
-    { label: '雅痞-简', value: 'Yapi SC' },
-    { label: '圆体-简', value: 'Yuanti SC' },
-    { label: '幼圆', value: 'YouYuan' },
-    { label: '隶书', value: 'LiSu' },
-    { label: '华文细黑', value: 'STXihei' },
-    { label: '华文楷体', value: 'STKaiti' },
-    { label: '华文宋体', value: 'STSong' },
-    { label: '华文仿宋', value: 'STFangsong' },
-    { label: '华文中宋', value: 'STZhongsong' },
-    { label: '华文彩云', value: 'STCaiyun' },
-    { label: '华文琥珀', value: 'STHupo' },
-    { label: '华文新魏', value: 'STXinwei' },
-    { label: '华文隶书', value: 'STLiti' },
-    { label: '华文行楷', value: 'STXingkai' },
-    { label: '方正舒体', value: 'FZShuTi' },
-    { label: '方正姚体', value: 'FZYaoti' },
-    { label: '思源黑体', value: 'Source Han Sans CN' },
-    { label: '思源宋体', value: 'Source Han Serif SC' },
-    { label: '文泉驿微米黑', value: 'WenQuanYi Micro Hei' },
-  ]*/
+
 export let registerConfig = createEditorConfig();
 //具体的物料配置
 const createInputProp = (label) => ({ type: 'input', label });
 const createColorProp = (label) => ({ type: 'color', label });
 const createSelectProp = (label, options) => ({ type: 'select', label, options })
 const createTableProp = (label, table) => ({ type: 'table', label, table })
-const createIptNumberProp =  (label) => ({ type: 'input', label });
+const createIptNumberProp =  (label) => ({ type: 'iptNumber', label });
 
 registerConfig.register({
     label: '下拉框',
@@ -98,7 +53,7 @@ registerConfig.register({
 registerConfig.register({
     label: '文本',
     preview: () => '预览文本',
-    render: ({ props }) => <span style={{ color: props.color, fontSize: props.size,fontFamily: props.font}}>{props.text || '渲染文本'}</span>,
+    render: ({ props }) => <span style={{ color: props.color, fontSize: props.size+'px' || 16,fontFamily: props.font}}>{props.text || '渲染文本'}</span>,
     key: 'text',
     props: {
         text: createInputProp('文本内容'),
@@ -198,10 +153,19 @@ registerConfig.register({
         width: true, // 更改输入框的横向大小
     },
     preview: () => <ElInput placeholder="预览输入框"></ElInput>,
-    render: ({ model, size }) => <ElInput placeholder="渲染输入框" {...model.default} style={{ width: size.width + 'px' }}></ElInput>,
+    render: ({ model, size , props}) => <ElInput placeholder={props.text || '输入框占位值'} {...model.default} style={{ width: size.width + 'px' ,height:size.height + 'px' }} type={props.type}></ElInput>,
     key: 'input',
     model: { // {default:'username'}
-        default: '绑定字段'
+        default: '绑定字段',
+        
+    },
+    props:{
+        text: createInputProp('默认值'),
+        type:createSelectProp('输入类型',[
+            {label: '文本', value:'text'},
+            {label: '密码', value:'password'},
+            {label: '数字', value:'number',}
+        ])
     }
 });
 

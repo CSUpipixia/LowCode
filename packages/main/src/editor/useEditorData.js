@@ -31,9 +31,12 @@ export function useEditorData() {
     state.currentPageData = {
       "container": {
           "width": 800,
-          "height": 550
+          "height": 550,
+          "background":null,
+          "bgImage":''
       },
       "blocks": [
+        
 
       ]
     }
