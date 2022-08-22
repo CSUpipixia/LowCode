@@ -24,7 +24,9 @@ export function useFocus(data,previewRef,callback) { // 获取哪些元素被选
     }
     const blockMousedown = (e, block,index) => {
         if(previewRef.value) return 
+        // 阻止本来的事件
         e.preventDefault();
+        // 禁止冒泡
         e.stopPropagation();
         // block上我们规划一个属性 focus 获取焦点后就将focus变为true
         if (e.shiftKey) {

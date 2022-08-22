@@ -87,9 +87,9 @@ export default defineComponent({
             },
             {
                 label: '关闭', icon: 'icon-close', handler: () => {
-                    // editorRef.value = false;
-                    // clearBlockFocus();
-                    savePageData();
+                    editorRef.value = false;
+                    clearBlockFocus();
+                    // savePageData();
                 }
             },
         ];
@@ -160,6 +160,7 @@ export default defineComponent({
                     </div>
                 ))}
             </div>
+            
             <div class="editor-top">
                 {buttons.map((btn, index) => {
                     const icon = typeof btn.icon == 'function' ? btn.icon() : btn.icon
@@ -170,25 +171,23 @@ export default defineComponent({
                     </div>
                 })}
             </div>
+            
             <div class="editor-right">
-            <ElTabs >
-            <ElTabPane label="属性" name="props">
-                <EditorOperator
-                        block={lastSelectBlock.value}
-                        data={data.value}
-                        updateContainer={commands.updateContainer}
-                        updateBlock={commands.updateBlock}
-                    ></EditorOperator>
-            </ElTabPane>
-            <ElTabPane label="事件" name="events">
-              { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
-            </ElTabPane>
-            <ElTabPane label="动画" name="animates">
-              { lastSelectBlock.value ? <ElButton>fade效果</ElButton> : 'EmptyText' }
-            </ElTabPane>
-          </ElTabs>
-               
+                <ElTabs>
+                    <ElTabPane label="属性" name="props">
+                        <EditorOperator
+                            block={lastSelectBlock.value}
+                            data={data.value}
+                            updateContainer={commands.updateContainer}
+                            updateBlock={commands.updateBlock}
+                        ></EditorOperator>
+                    </ElTabPane>
+                    <ElTabPane label="事件" name="events">
+                        { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
+                    </ElTabPane>
+                </ElTabs>
             </div>
+            
             <div class="editor-container">
                 {/*  负责产生滚动条 */}
                 <div class="editor-container-canvas">
@@ -198,7 +197,6 @@ export default defineComponent({
                         style={containerStyles.value}
                         ref={containerRef}
                         onMousedown={containerMousedown}
-
                     >
                         {
                             (data.value.blocks.map((block, index) => (
@@ -214,7 +212,6 @@ export default defineComponent({
 
                         {markLine.x !== null && <div class="line-x" style={{ left: markLine.x + 'px' }}></div>}
                         {markLine.y !== null && <div class="line-y" style={{ top: markLine.y + 'px' }}></div>}
-                        
                     </div>
                 </div>
             </div>

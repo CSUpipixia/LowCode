@@ -1,5 +1,5 @@
 // 列表区可以显示所有的物料
-// key对应的组件映射关系 
+// key对应的组件映射关系
 import { ElButton, ElInput, ElOption, ElSelect } from 'element-plus'
 import Range from '../components/Range'
 
@@ -18,12 +18,13 @@ function createEditorConfig() {
 }
 
 export let registerConfig = createEditorConfig();
-//具体的物料配置
+
+// 具体的物料属性配置
 const createInputProp = (label) => ({ type: 'input', label });
 const createColorProp = (label) => ({ type: 'color', label });
-const createSelectProp = (label, options) => ({ type: 'select', label, options })
-const createTableProp = (label, table) => ({ type: 'table', label, table })
-const createIptNumberProp =  (label) => ({ type: 'iptNumber', label });
+const createSelectProp = (label, options) => ({ type: 'select', label, options });
+const createTableProp = (label, table) => ({ type: 'table', label, table });
+const createIptNumberProp = (label) => ({ type: 'iptNumber', label });
 
 registerConfig.register({
     label: '下拉框',
@@ -36,7 +37,7 @@ registerConfig.register({
         </ElSelect>
     },
     key: 'select',
-    props: { // [{label:'a',value:'1'},{label:'b',value:2}]
+    props: {
         options: createTableProp('下拉选项', {
             options: [
                 { label: '显示值', field: 'label' },
@@ -53,17 +54,13 @@ registerConfig.register({
 registerConfig.register({
     label: '文本',
     preview: () => '预览文本',
-    render: ({ props }) => <span style={{ color: props.color, fontSize: props.size+'px' || 16,fontFamily: props.font}}>{props.text || '渲染文本'}</span>,
+    render: ({ props }) => <span style={{ color: props.color, fontSize: props.size + 'px' || 16, fontFamily: props.font }}>
+        {props.text || '渲染文本'}
+    </span>,
     key: 'text',
     props: {
         text: createInputProp('文本内容'),
         color: createColorProp('字体颜色'),
-        // size: createSelectProp('字体大小', [
-        //     { label: '14px', value: '14px' },
-        //     { label: '20px', value: '20px' },
-        //     { label: '24px', value: '24px' },
-        //     { label: '26px', value: '26px' },
-        // ])
         font: createSelectProp( '字体设置',  [
             { label: '宋体', value: 'SimSun' },
             { label: '黑体', value: 'SimHei' },
@@ -122,11 +119,12 @@ registerConfig.register({
         height: true
     },
     preview: () => <ElButton>预览按钮</ElButton>,
-    render: ({ props, size }) =>
+    render: ({ props, events, size }) =>
         <ElButton
             style={{ height: size.height + 'px', width: size.width + 'px' }}
             type={props.type}
             size={props.size}
+            onClick={() => { events.click() }}
         >{props.text || '渲染按钮'}</ElButton>,
     key: 'button',
     props: {
@@ -144,6 +142,11 @@ registerConfig.register({
             { label: '小', value: 'small' },
             { label: '极小', value: 'mini' },
         ])
+    },
+    events: {
+        click: {
+            actions: []
+        }
     }
 })
 
@@ -153,7 +156,12 @@ registerConfig.register({
         width: true, // 更改输入框的横向大小
     },
     preview: () => <ElInput placeholder="预览输入框"></ElInput>,
-    render: ({ model, size , props}) => <ElInput placeholder={props.text || '输入框占位值'} {...model.default} style={{ width: size.width + 'px' ,height:size.height + 'px' }} type={props.type}></ElInput>,
+    render: ({ model, size, props }) =>
+        <ElInput
+            placeholder={props.text || '输入框占位值'} {...model.default}
+            style={{ width: size.width + 'px', height: size.height + 'px' }}
+            type={props.type}
+        ></ElInput>,
     key: 'input',
     model: { // {default:'username'}
         default: '绑定字段',
@@ -161,7 +169,7 @@ registerConfig.register({
     },
     props:{
         text: createInputProp('默认值'),
-        type:createSelectProp('输入类型',[
+        type:createSelectProp('输入类型', [
             {label: '文本', value:'text'},
             {label: '密码', value:'password'},
             {label: '数字', value:'number',}
