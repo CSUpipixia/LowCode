@@ -1,7 +1,6 @@
 // 列表区可以显示所有的物料
 // key对应的组件映射关系 
 import { ElButton, ElInput, ElOption, ElSelect } from 'element-plus'
-import Range from '../components/Range'
 
 function createEditorConfig() {
     const componentList = [];
@@ -16,55 +15,9 @@ function createEditorConfig() {
         }
     }
 }
-/*const fontArr = [
-    { label: '宋体', value: 'SimSun' },
-    { label: '黑体', value: 'SimHei' },
-    { label: '微软雅黑', value: 'Microsoft Yahei' },
-    { label: '微软正黑体', value: 'Microsoft JhengHei' },
-    { label: '楷体', value: 'KaiTi' },
-    { label: '新宋体', value: 'NSimSun' },
-    { label: '仿宋', value: 'FangSong' },
-    { label: '苹方', value: 'PingFang SC' },
-    { label: '华文黑体', value: 'STHeiti' },
-    { label: '华文楷体', value: 'STKaiti' },
-    { label: '华文宋体', value: 'STSong' },
-    { label: '华文仿宋', value: 'STFangsong' },
-    { label: '华文中宋', value: 'STZhongsong' },
-    { label: '华文琥珀', value: 'STHupo' },
-    { label: '华文新魏', value: 'STXinwei' },
-    { label: '华文隶书', value: 'STLiti' },
-    { label: '华文行楷', value: 'STXingkai' },
-    { label: '冬青黑体简', value: 'Hiragino Sans GB' },
-    { label: '兰亭黑-简', value: 'Lantinghei SC' },
-    { label: '翩翩体-简', value: 'Hanzipen SC' },
-    { label: '手札体-简', value: 'Hannotate SC' },
-    { label: '宋体-简', value: 'Songti SC' },
-    { label: '娃娃体-简', value: 'Wawati SC' },
-    { label: '魏碑-简', value: 'Weibei SC' },
-    { label: '行楷-简', value: 'Xingkai SC' },
-    { label: '雅痞-简', value: 'Yapi SC' },
-    { label: '圆体-简', value: 'Yuanti SC' },
-    { label: '幼圆', value: 'YouYuan' },
-    { label: '隶书', value: 'LiSu' },
-    { label: '华文细黑', value: 'STXihei' },
-    { label: '华文楷体', value: 'STKaiti' },
-    { label: '华文宋体', value: 'STSong' },
-    { label: '华文仿宋', value: 'STFangsong' },
-    { label: '华文中宋', value: 'STZhongsong' },
-    { label: '华文彩云', value: 'STCaiyun' },
-    { label: '华文琥珀', value: 'STHupo' },
-    { label: '华文新魏', value: 'STXinwei' },
-    { label: '华文隶书', value: 'STLiti' },
-    { label: '华文行楷', value: 'STXingkai' },
-    { label: '方正舒体', value: 'FZShuTi' },
-    { label: '方正姚体', value: 'FZYaoti' },
-    { label: '思源黑体', value: 'Source Han Sans CN' },
-    { label: '思源宋体', value: 'Source Han Serif SC' },
-    { label: '文泉驿微米黑', value: 'WenQuanYi Micro Hei' },
-  ]*/
+
 export let registerConfig = createEditorConfig();
 //具体的物料配置
-const createRichTextProp = (label) => ({ type: 'richtext', label });
 const createInputProp = (label) => ({ type: 'input', label });
 const createColorProp = (label) => ({ type: 'color', label });
 const createSelectProp = (label, options) => ({ type: 'select', label, options })
@@ -205,25 +158,6 @@ registerConfig.register({
         default: '绑定字段'
     }
 });
-
-registerConfig.register({
-    label: '范围选择器',
-    preview: () => <Range placeholder="预览输入框"></Range>,
-    render: ({ model }) => {
-        return <Range {...{
-            start: model.start.modelValue, // @update:start
-            end: model.end.modelValue,
-            'onUpdate:start': model.start['onUpdate:modelValue'],
-            'onUpdate:end': model.end['onUpdate:modelValue']
-        }}></Range>
-    },
-    model: {
-        start: '开始范围字段',
-        end: '结束范围字段'
-    },
-    key: 'range',
-})
-
 
 // model:{// {start:'start',end:'end'}
 //     start:'开始字段',

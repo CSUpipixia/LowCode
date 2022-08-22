@@ -66,7 +66,7 @@ export default defineComponent({
                                     })}
                                 </ElSelect>,
                                 table:()=> <TableEditor propConfig={propConfig} v-model={state.editData.props[propName]} ></TableEditor>,
-                                iptNumber:()=>  <ElInputNumber v-model={state.editData.props[propName]}></ElInputNumber>
+                                iptNumber: () => <ElInputNumber v-model={state.editData.props[propName]}></ElInputNumber>
                             }[propConfig.type]()}
                         </ElFormItem>
                     }))

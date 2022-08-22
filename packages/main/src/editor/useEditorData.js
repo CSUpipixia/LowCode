@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 export function useEditorData() {
 
   // 初始化页面数据，包括 页面列表、当前页面（默认首页）、当前页面JSON数据，首次进入页面、页面跳转、刷新页面执行
-  const initEditorData = (path = '/') => {
+  const initEditorData = (path) => {
     console.log('initData')
     // 获取所有页面列表
     state.pageList = [
@@ -52,6 +52,7 @@ export function useEditorData() {
     currentPageData
   })
 
+  console.log(router.currentRoute.value.fullPath)
   // 初始化数据
   initEditorData(router.currentRoute.value.fullPath)
 
@@ -66,12 +67,13 @@ export function useEditorData() {
 
   // 创建页面
   const createPage = () => {
-
+    // 调用后端接口
+    // 后端保存成功，更新 pageList
   }
 
   // 更新界面
   const updatePage = () => {
-
+    
   }
 
   // 删除页面

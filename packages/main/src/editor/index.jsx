@@ -11,7 +11,6 @@ import { $dropdown, DropdownItem } from "../components/Dropdown";
 import EditorOperator from "./editor-operator";
 import { ElButton } from "element-plus";
 import { registerConfig as config } from '@/utils/editor-config';
-import initData from '@/data.json';
 import { useEditorData } from './useEditorData'
 export default defineComponent({
     props: {
