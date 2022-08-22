@@ -1,12 +1,12 @@
 import { reactive, toRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { queryPageList, createPage, getPage, setHomePage, savePageData, deletePage } from '@/api/page'
+import * as pageApi from '@/api/page'
 
 // 初始化页面数据，包括 页面列表、当前页面（默认首页）、当前页面JSON数据，首次进入页面、页面跳转、刷新页面执行
-async function initEditorData(state, path = '/') {
+export const initEditorData = async (state, path = '/') => {
   console.log('initData')
   // 获取所有页面列表
-  state.pageList = await queryPageList()
+  // state.pageList = await pageApi.queryPageList()
   console.log('pageList', state.pageList)
   // 根据页面进入情况设置
   // 若 path 为 / ，存在首页则设为当前页
@@ -51,11 +51,11 @@ export function useEditorData() {
   // 路由变化时更新当前操作的页面
   watch (
     () => route.path,
-    (url) => initEditorData(url),
+    (url) => initEditorData(state, url),
   );
 
   // 创建页面
-  const createPage = () => {
+  const createPage = async (data) => {
 
   }
 

@@ -1,15 +1,17 @@
 import deepcopy from "deepcopy";
-import { onUnmounted } from "vue";
+import { watch, onUnmounted } from "vue";
+import { useRoute } from 'vue-router'
 import { events } from "./events";
 
 export function useCommand(data, focusData) {
-    const state = { // 前进后退需要指针
+    let state = { // 前进后退需要指针
         current: -1, // 前进后退的索引值
         queue: [], //  存放所有的操作命令
         commands: {}, // 制作命令和执行功能一个映射表  undo: ()=>{}  redo: ()=>{}
         commandArray: [], // 存放所有的命令
         destroyArray: []
     }
+
     const registry = (command) => {
         state.commandArray.push(command);
         state.commands[command.name] = (...args) => { // 命令名字对应执行函数
@@ -259,12 +261,22 @@ export function useCommand(data, focusData) {
         return init
     })();
     (() => {
-
         // 监听键盘事件
         state.destroyArray.push(keyboardEvent())
         state.commandArray.forEach(command => command.init && state.destroyArray.push(command.init()))
     })();
 
+    const route = useRoute();
+
+    // 切换页面时重置数据
+    watch (
+        () => route.path,
+        (url) => { 
+            state.current = -1
+            state.queue = []
+            state.destroyArray = []
+        }
+    );
     onUnmounted(() => { // 清理绑定的事件
         state.destroyArray.forEach(fn => fn && fn());
     })
