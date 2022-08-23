@@ -81,28 +81,25 @@ export default defineComponent({
             { label: '置顶', icon: 'icon-place-top', handler: () => commands.placeTop() },
             { label: '置底', icon: 'icon-place-bottom', handler: () => commands.placeBottom() },
             { label: '删除', icon: 'icon-delete', handler: () => commands.delete() },
-
-
             {
-                label: () => previewRef.value ? '编辑' : '预览', icon: () => previewRef.value ? 'icon-edit' : 'icon-browse', handler: () => {
+                label: () => previewRef.value ? '编辑' : '预览', icon: () => previewRef.value ? 'icon-edit' : 'icon-browse',
+                handler: () => {
                     previewRef.value = !previewRef.value;
                     clearBlockFocus();
                 }
             },
             {
                 label: '保存', icon: 'icon-close',
-                //这里写保存
                 handler: () => {
                     savePageData();
                 }
             },
             {
                 label: '运行', icon: 'icon-reset',
-                // 这里跳转到应用部署地址
-                // handler: () => {
-                //     editorRef.value = false;
-                //     clearBlockFocus();
-                // }
+                // 跳转到应用部署地址
+                handler: () => {
+
+                }
             },
         ];
 
@@ -183,23 +180,22 @@ export default defineComponent({
                 })}
             </div>
             <div class="editor-right">
-            <ElTabs >
-            <ElTabPane label="属性" name="props">
-                <EditorOperator
-                        block={lastSelectBlock.value}
-                        data={data.value}
-                        updateContainer={commands.updateContainer}
-                        updateBlock={commands.updateBlock}
-                    ></EditorOperator>
-            </ElTabPane>
-            <ElTabPane label="事件" name="events">
-              { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
-            </ElTabPane>
-            <ElTabPane label="动画" name="animates">
-              { lastSelectBlock.value ? <ElButton>fade效果</ElButton> : 'EmptyText' }
-            </ElTabPane>
-          </ElTabs>
-               
+                <ElTabs model-value={ 'props' }>
+                    <ElTabPane label="属性" name="props">
+                        <EditorOperator
+                            block={lastSelectBlock.value}
+                            data={data.value}
+                            updateContainer={commands.updateContainer}
+                            updateBlock={commands.updateBlock}
+                        ></EditorOperator>
+                    </ElTabPane>
+                    <ElTabPane label="事件" name="events">
+                        { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
+                    </ElTabPane>
+                    <ElTabPane label="动画" name="animates">
+                        { lastSelectBlock.value ? <ElButton>fade效果</ElButton> : 'EmptyText' }
+                    </ElTabPane>
+                </ElTabs>
             </div>
             <div class="editor-container">
                 {/*  负责产生滚动条 */}
@@ -210,7 +206,6 @@ export default defineComponent({
                         style={containerStyles.value}
                         ref={containerRef}
                         onMousedown={containerMousedown}
-
                     >
                         {
                             (data.value.blocks.map((block, index) => (
