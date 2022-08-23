@@ -93,13 +93,12 @@ export default defineComponent({
                 label: '保存', icon: 'icon-close',
                 //这里写保存
                 handler: () => {
-                    editorRef.value = false;
-                    clearBlockFocus();
+                    savePageData();
                 }
             },
             {
                 label: '运行', icon: 'icon-reset',
-                //这里写router切换
+                // 这里跳转到应用部署地址
                 // handler: () => {
                 //     editorRef.value = false;
                 //     clearBlockFocus();

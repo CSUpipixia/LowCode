@@ -72,6 +72,12 @@ export function useEditorData() {
     (url) => initEditorData(state, router),
   );
 
+  // 获取所有页面
+  const getPageList = async () => {
+    let res = await pageApi.queryPageList()
+    state.pageList = res.data.data
+  }
+
   // 创建页面
   const createPage = async (data) => {
     let res = await pageApi.createPage(data);
