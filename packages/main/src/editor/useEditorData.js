@@ -1,5 +1,6 @@
 import { reactive, toRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { ElNotification } from 'element-plus'
 import * as pageApi from '@/api/page'
 
 // 初始化页面数据，包括 页面列表、当前页面（默认首页）、当前页面JSON数据，首次进入页面、页面跳转、刷新页面执行
@@ -79,30 +80,78 @@ export function useEditorData() {
 
   // 创建页面
   const createPage = async (data) => {
-
+    let res = await pageApi.createPage(data);
+    if (res.data.code === 200) {
+      ElNotification({
+        title: '创建成功',
+        type: 'success'
+      })
+    } else {
+      ElNotification({
+        title: '创建失败',
+        type: 'Error'
+      })
+    }
+    getPageList()
   }
 
-  // 更新界面
-  const updatePage = () => {
-
+  // 设置首页界面
+  const setHomePage = async (_id) => {
+    let res = await pageApi.setHomePage(_id);
+    if (res.data.code === 200) {
+      ElNotification({
+        title: '设置首页成功',
+        type: 'success'
+      })
+    } else { 
+      ElNotification({
+        title: '设置首页失败',
+        type: 'Error'
+      })
+    }
+    getPageList()
   }
 
   // 删除页面
-  const deletePage = () => {
-
+  const deletePage = async (_id) => {
+    let res = await pageApi.deletePage(_id);
+    if (res.data.code === 200) {
+      ElNotification({
+        title: '删除成功',
+        type: 'success'
+      })
+    } else { 
+      ElNotification({
+        title: '删除失败',
+        type: 'Error'
+      })
+    }
+    getPageList()
   }
 
   // 保存页面JSON数据
-  const savePageData = () => {
-    pageApi.savePageData(state.currentPage._id, state.currentPageData)
+  const savePageData = async () => {
+    let res = await pageApi.savePageData(state.currentPage._id, state.currentPageData)
+    if (res.data.code === 200) {
+      ElNotification({
+        title: '保存成功',
+        type: 'success'
+      })
+    } else { 
+      ElNotification({
+        title: '保存失败',
+        type: 'Error'
+      })
+    }
   }
 
   return {
     pageList: toRef(state, 'pageList'),
     currentPage: toRef(state, 'currentPage'),
     currentPageData: toRef(state, 'currentPageData'),
+    getPageList,
+    setHomePage,
     createPage,
-    updatePage,
     deletePage,
     savePageData
   }
