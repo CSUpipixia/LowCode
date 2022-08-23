@@ -8,8 +8,16 @@
     &-right {
         position: absolute;
         width: 270px;
-        top: 0;
+        top: 60px;
         bottom: 0
+    }
+    &-toptry {
+        position: absolute;
+        width: 800px;
+        top: 5px;
+        bottom: 0px;
+        align-items: center;
+        background: #d54242;
     }
 
     &-left {
@@ -57,12 +65,15 @@
 
     &-top {
         position: absolute;
-        right: 280px;
-        left: 280px;
-        height: 80px;
+        right: 0px;
+        left: 0px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background: linear-gradient( #ece8ef , white);
+        border-radius: 50px;
+
 
         &-button {
             width: 60px;
@@ -71,11 +82,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            ;
-            background: rgba(0, 0, 0, .3);
+        ;
+            background: linear-gradient( #ece8ef , white);
             user-select: none;
             cursor: pointer;
-            color: #fff;
+            color: #535353;
 
             &+& {
                 margin-left: 3px
@@ -161,7 +172,7 @@
     line-height: 30px;
     width: 100px;
     border-bottom: 1px solid #ccc;
-    ;
+;
     text-align: center;
     user-select: none;
     cursor: pointer;
@@ -240,3 +251,53 @@
 .el-button,.el-input{
     transition: none;
 }
+
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
+
+
+.avatar-uploader .el-upload {
+  border: 1px dashed var(--el-border-color);
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: var(--el-transition-duration-fast);
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: var(--el-color-primary);
+}
+
+.el-icon.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  text-align: center;
+}
+
+.uploader-icon {
+    width: 178px;
+    height: 178px;
+    font-size: 28px;
+    line-height: 178px;
+    color: #8c939d;
+    text-align: center;
+  }
+  .upload {
+   
+      
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+      }
+  
+    
+ 
