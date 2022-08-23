@@ -8,8 +8,16 @@
     &-right {
         position: absolute;
         width: 270px;
-        top: 0;
+        top: 60px;
         bottom: 0
+    }
+    &-toptry {
+        position: absolute;
+        width: 800px;
+        top: 5px;
+        bottom: 0px;
+        align-items: center;
+        background: #d54242;
     }
 
     &-left {
@@ -57,12 +65,15 @@
 
     &-top {
         position: absolute;
-        right: 280px;
-        left: 280px;
-        height: 80px;
+        right: 0px;
+        left: 0px;
+        height: 60px;
         display: flex;
         justify-content: center;
         align-items: center;
+        background: linear-gradient( #ece8ef , white);
+        border-radius: 50px;
+
 
         &-button {
             width: 60px;
@@ -71,11 +82,11 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-radius: 100px;//#6e8efb, #a777e3 两个主色调
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            ;
+            background: linear-gradient( #ece8ef , white);
             user-select: none;
             cursor: pointer;
-            color: #f4eefa;//菜单栏颜色
+            color: #535353;
 
             &+& {
                 margin-left: 3px
@@ -150,7 +161,7 @@
     display: none;
     position: absolute;
     background: #fff;
-    box-shadow: 2px 2px #e4d6f3;
+    box-shadow: 2px 2px #ccc;
 }
 
 .dropdown-isShow {
@@ -160,7 +171,8 @@
 .dropdown-item {
     line-height: 30px;
     width: 100px;
-    border-bottom: 1px solid #e4d6f3;
+    border-bottom: 1px solid #ccc;
+    ;
     text-align: center;
     user-select: none;
     cursor: pointer;
