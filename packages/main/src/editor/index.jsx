@@ -11,6 +11,7 @@ import { $dropdown, DropdownItem } from "../components/Dropdown";
 import EditorOperator from "./editor-operator";
 import { ElButton,ElTabs,ElTabPane } from "element-plus";
 import { registerConfig as config } from '@/utils/editor-config';
+import { useEditorData } from './useEditorData'
 export default defineComponent({
     props: {
         formData: { type: Object }
@@ -23,7 +24,9 @@ export default defineComponent({
 
         const { currentPageData, savePageData } = useEditorData()
         const data = currentPageData
-        console.log('currentPageData',data.value);
+
+        console.log('currentPageData', data.value);
+        
         const containerStyles = computed(() => ({
             width: data.value.container.width + 'px',
             height: data.value.container.height + 'px',
