@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, provide, onMounted } from "vue";
+import { computed, defineComponent, ref, provide } from "vue";
 import './editor.scss';
 import EditorBlock from './editor-block';
 import deepcopy from "deepcopy";
@@ -11,8 +11,6 @@ import { $dropdown, DropdownItem } from "../components/Dropdown";
 import EditorOperator from "./editor-operator";
 import { ElButton,ElTabs,ElTabPane } from "element-plus";
 import { registerConfig as config } from '@/utils/editor-config';
-import initData from '@/data.json';
-import { useEditorData } from './useEditorData'
 export default defineComponent({
     props: {
         formData: { type: Object }
@@ -37,7 +35,7 @@ export default defineComponent({
         // 注入物料配置
         provide('config', config); // 将组件的配置直接传值
 
-        const containerRef = ref(null);//拖拽的dom元素
+        const containerRef = ref(null);
 
         // 1.实现菜单的拖拽功能
         const { dragstart, dragend } = useMenuDragger(containerRef, data);
@@ -47,11 +45,12 @@ export default defineComponent({
             // 获取焦点后进行拖拽
             mousedown(e)
         });
-        
-        // 2.实现组件容器内 拖拽
+
+        // 2.实现组件拖拽
         let { mousedown, markLine } = useBlockDragger(focusData, lastSelectBlock, data);
 
         const { commands } = useCommand(data, focusData); // []
+
         const buttons = [
             { label: '撤销', icon: 'icon-back', handler: () => commands.undo() },
             { label: '重做', icon: 'icon-forward', handler: () => commands.redo() },
@@ -79,6 +78,8 @@ export default defineComponent({
             { label: '置顶', icon: 'icon-place-top', handler: () => commands.placeTop() },
             { label: '置底', icon: 'icon-place-bottom', handler: () => commands.placeBottom() },
             { label: '删除', icon: 'icon-delete', handler: () => commands.delete() },
+
+
             {
                 label: () => previewRef.value ? '编辑' : '预览', icon: () => previewRef.value ? 'icon-edit' : 'icon-browse', handler: () => {
                     previewRef.value = !previewRef.value;
@@ -86,11 +87,20 @@ export default defineComponent({
                 }
             },
             {
-                label: '关闭', icon: 'icon-close', handler: () => {
-                    // editorRef.value = false;
-                    // clearBlockFocus();
-                    savePageData();
+                label: '保存', icon: 'icon-close',
+                //这里写保存
+                handler: () => {
+                    editorRef.value = false;
+                    clearBlockFocus();
                 }
+            },
+            {
+                label: '运行', icon: 'icon-reset',
+                //这里写router切换
+                // handler: () => {
+                //     editorRef.value = false;
+                //     clearBlockFocus();
+                // }
             },
         ];
 
