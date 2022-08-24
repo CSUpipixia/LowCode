@@ -198,12 +198,13 @@ export default defineComponent({
                     </ElTabPane>
                     <ElTabPane label="事件" name="events">
 
-                        { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
+                        { lastSelectBlock.value ?
+                         <EditorEvent
+                            block={lastSelectBlock.value}
+                            data={data.value}>
+                        </EditorEvent> : 'EmptyText' }
                     </ElTabPane>
-                    <ElTabPane label="动画" name="animates">
-                        { lastSelectBlock.value ? <ElButton>fade效果</ElButton> : 'EmptyText' }
-
-                    </ElTabPane>
+                   
                 </ElTabs>
             </div>
             
