@@ -11,8 +11,7 @@ import Range from './components/Range.jsx'
 export default {
   components:{
     Editor,
-    Range,
-   
+    Range
   },
   setup(){
     const formData = ref({

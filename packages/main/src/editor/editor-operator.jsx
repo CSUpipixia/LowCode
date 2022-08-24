@@ -1,5 +1,5 @@
 import { defineComponent, inject, watch, reactive, } from "vue";
-import { ElForm, ElFormItem, ElButton, ElInputNumber, ElColorPicker, ElSelect, ElOption, ElInput, ElUpload, ElIcon } from 'element-plus'
+import { ElForm, ElFormItem, ElButton, ElInputNumber, ElColorPicker, ElSelect, ElOption, ElInput, ElSwitch, ElUpload, ElIcon } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import deepcopy from "deepcopy";
 import TableEditor from "./table-editor";
@@ -100,7 +100,9 @@ export default defineComponent({
                             return <ElFormItem label={propConfig.label}>
                                 {/* 根据 propConfig.type 匹配渲染设置框 */}
                                 {{
-                                    input: () => <ElInput v-model={state.editData.props[propName]} placeholder={'输入您需要显示的值'}></ElInput>,
+
+                                    input: () => <ElInput v-model={state.editData.props[propName]}></ElInput>,
+                                    switch: () => <ElSwitch v-model={state.editData.props[propName]}></ElSwitch>,
                                     color: () => <ElColorPicker v-model={state.editData.props[propName]}></ElColorPicker>,
                                     select: () => <ElSelect v-model={state.editData.props[propName]}>
                                         {propConfig.options.map(opt => {

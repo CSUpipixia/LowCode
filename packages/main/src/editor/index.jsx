@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref, provide, onMounted } from "vue";
+import { computed, defineComponent, ref, provide } from "vue";
 import './editor.scss';
 import EditorBlock from './editor-block';
 import EditorEvent from './editor-event'
@@ -12,7 +12,6 @@ import { $dropdown, DropdownItem } from "../components/Dropdown";
 import EditorOperator from "./editor-operator";
 import { ElButton,ElTabs,ElTabPane } from "element-plus";
 import { registerConfig as config } from '@/utils/editor-config';
-import initData from '@/data.json';
 import { useEditorData } from './useEditorData'
 export default defineComponent({
     props: {
@@ -26,7 +25,9 @@ export default defineComponent({
 
         const { currentPageData, savePageData } = useEditorData()
         const data = currentPageData
-        console.log('currentPageData',data.value);
+
+        console.log('currentPageData', data.value);
+        
         const containerStyles = computed(() => ({
             width: data.value.container.width + 'px',
             height: data.value.container.height + 'px',
@@ -38,7 +39,7 @@ export default defineComponent({
         // 注入物料配置
         provide('config', config); // 将组件的配置直接传值
 
-        const containerRef = ref(null);//拖拽的dom元素
+        const containerRef = ref(null);
 
         // 1.实现菜单的拖拽功能
         const { dragstart, dragend } = useMenuDragger(containerRef, data);
@@ -48,11 +49,12 @@ export default defineComponent({
             // 获取焦点后进行拖拽
             mousedown(e)
         });
-        
-        // 2.实现组件容器内 拖拽
+
+        // 2.实现组件拖拽
         let { mousedown, markLine } = useBlockDragger(focusData, lastSelectBlock, data);
 
         const { commands } = useCommand(data, focusData); // []
+
         const buttons = [
             { label: '撤销', icon: 'icon-back', handler: () => commands.undo() },
             { label: '重做', icon: 'icon-forward', handler: () => commands.redo() },
@@ -81,16 +83,25 @@ export default defineComponent({
             { label: '置底', icon: 'icon-place-bottom', handler: () => commands.placeBottom() },
             { label: '删除', icon: 'icon-delete', handler: () => commands.delete() },
             {
-                label: () => previewRef.value ? '编辑' : '预览', icon: () => previewRef.value ? 'icon-edit' : 'icon-browse', handler: () => {
+                label: () => previewRef.value ? '编辑' : '预览', icon: () => previewRef.value ? 'icon-edit' : 'icon-browse',
+                handler: () => {
                     previewRef.value = !previewRef.value;
                     clearBlockFocus();
                 }
             },
             {
-                label: '关闭', icon: 'icon-close', handler: () => {
-                    editorRef.value = false;
-                    clearBlockFocus();
-                    // savePageData();
+
+                label: '保存', icon: 'icon-close',
+                handler: () => {
+                    savePageData();
+
+                }
+            },
+            {
+                label: '运行', icon: 'icon-reset',
+                // 跳转到应用部署地址
+                handler: () => {
+
                 }
             },
         ];
@@ -174,7 +185,9 @@ export default defineComponent({
             </div>
             
             <div class="editor-right">
-                <ElTabs>
+
+                <ElTabs model-value={ 'props' }>
+
                     <ElTabPane label="属性" name="props">
                         <EditorOperator
                             block={lastSelectBlock.value}
@@ -184,11 +197,12 @@ export default defineComponent({
                         ></EditorOperator>
                     </ElTabPane>
                     <ElTabPane label="事件" name="events">
-                        
-                        <EditorEvent
-                            block={lastSelectBlock.value}
-                            data={data.value}>
-                        </EditorEvent> 
+
+                        { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
+                    </ElTabPane>
+                    <ElTabPane label="动画" name="animates">
+                        { lastSelectBlock.value ? <ElButton>fade效果</ElButton> : 'EmptyText' }
+
                     </ElTabPane>
                 </ElTabs>
             </div>
