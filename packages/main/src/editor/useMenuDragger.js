@@ -1,6 +1,5 @@
 import {events} from './events';
 export function useMenuDragger(containerRef, data){
-    console.log('当前点击的组件',containerRef);
     //
     let currentComponent = null;
     //dragenter当被鼠标拖动的对象进入其容器范围内时触发此事件

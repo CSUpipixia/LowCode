@@ -30,7 +30,6 @@ export function useCommand(data, focusData) {
             }
             queue.push({ redo, undo }); // 保存指令的前进后退
             state.current = current + 1;
-            console.log(queue);
         }
     }
 
