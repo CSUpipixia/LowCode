@@ -24,7 +24,7 @@ const createInputProp = (label) => ({ type: 'input', label });
 const createColorProp = (label) => ({ type: 'color', label });
 const createSelectProp = (label, options) => ({ type: 'select', label, options });
 const createTableProp = (label, table) => ({ type: 'table', label, table });
-const createIptNumberProp = (label) => ({ type: 'iptNumber', label });
+const createIptNumberProp = (label,value) => ({ type: 'iptNumber', label,value });
 
 registerConfig.register({
     label: '下拉框',
@@ -107,7 +107,7 @@ registerConfig.register({
             { label: '思源宋体', value: 'Source Han Serif SC' },
             { label: '文泉驿微米黑', value: 'WenQuanYi Micro Hei' },
           ] ),
-        size:createIptNumberProp('字体大小')
+        size:createIptNumberProp('字体大小',16)
 
     }
 })
@@ -158,7 +158,7 @@ registerConfig.register({
     preview: () => <ElInput placeholder="预览输入框"></ElInput>,
     render: ({ model, size, props }) =>
         <ElInput
-            placeholder={props.text || '输入框占位值'} {...model.default}
+            placeholder={props.text } {...model.default}
             style={{ width: size.width + 'px', height: size.height + 'px' }}
             type={props.type}
         ></ElInput>,
@@ -168,7 +168,7 @@ registerConfig.register({
         
     },
     props:{
-        text: createInputProp('默认值'),
+        text: createInputProp('输入框占位符'),
         type:createSelectProp('输入类型', [
             {label: '文本', value:'text'},
             {label: '密码', value:'password'},

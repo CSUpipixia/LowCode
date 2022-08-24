@@ -1,6 +1,7 @@
 import { computed, defineComponent, ref, provide, onMounted } from "vue";
 import './editor.scss';
 import EditorBlock from './editor-block';
+import EditorEvent from './editor-event'
 import deepcopy from "deepcopy";
 import { useMenuDragger } from "./useMenuDragger";
 import { useFocus } from "./useFocus";
@@ -33,7 +34,7 @@ export default defineComponent({
             backgroundImage:data.value.container.url
         }))
         // console.log('containerStyles.value',data.value);
-        console.log('index  containerStyles',data.value.container.backgroundColor);
+        // console.log('index  containerStyles',data.value.container.backgroundColor);
         // 注入物料配置
         provide('config', config); // 将组件的配置直接传值
 
@@ -183,7 +184,11 @@ export default defineComponent({
                         ></EditorOperator>
                     </ElTabPane>
                     <ElTabPane label="事件" name="events">
-                        { lastSelectBlock.value ? <ElButton>点击事件</ElButton> : 'EmptyText' }
+                        
+                        <EditorEvent
+                            block={lastSelectBlock.value}
+                            data={data.value}>
+                        </EditorEvent> 
                     </ElTabPane>
                 </ElTabs>
             </div>

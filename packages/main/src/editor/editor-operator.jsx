@@ -27,7 +27,7 @@ export default defineComponent({
         
             const reset = () => {
                 if (!props.block) { // 说明要绑定的是容器的宽度和高度
-                    console.log('props.data.container', props.data.container);
+                    // console.log('props.data.container', props.data.container);
                     state.editData = deepcopy(props.data.container)
                     console.log('state.editData.background', state.editData.background);
                 } else {
@@ -86,19 +86,21 @@ export default defineComponent({
                 } else {
 
                     let component = config.componentMap[props.block.key];//拿到的是最后点击的单个组件
-                    // console.log('component',component);
+                 
                     if (component && component.props) { // {text:{type:'xxx'},size:{},color:{}}
                         // {text:xxx,size:13px,color:#fff}
-                        // console.log('componet.props',component.props);
+                        //                                                   key         value
+                        // console.log('component.props',component.props);
                         content.push(Object.entries(component.props).map(([propName, propConfig]) => {
-                            // console.log('propName',propName);
-                            // console.log('propConfig.type',propConfig.type);
-                            console.log('iptnum',state.editData.props[propName]);
-                            // console.log('state.editData.props[propName]',state.editData.props[propName]);
+                            console.log('propName11',propName);
+                            // console.log('propConfig',propConfig);
+                            // console.log('Object.entries(component.props)',Object.entries(component.props));
+                            // console.log('[propName, propConfig]',[propName, propConfig]);
+                            console.log('state.editData.props[propName]',state.editData.props[propName]);
                             return <ElFormItem label={propConfig.label}>
                                 {/* 根据 propConfig.type 匹配渲染设置框 */}
                                 {{
-                                    input: () => <ElInput v-model={state.editData.props[propName]}></ElInput>,
+                                    input: () => <ElInput v-model={state.editData.props[propName]} placeholder={'输入您需要显示的值'}></ElInput>,
                                     color: () => <ElColorPicker v-model={state.editData.props[propName]}></ElColorPicker>,
                                     select: () => <ElSelect v-model={state.editData.props[propName]}>
                                         {propConfig.options.map(opt => {
@@ -106,7 +108,7 @@ export default defineComponent({
                                         })}
                                     </ElSelect>,
                                     table: () => <TableEditor propConfig={propConfig} v-model={state.editData.props[propName]} ></TableEditor>,
-                                    iptNumber: () => <ElInputNumber v-model={state.editData.props[propName]}></ElInputNumber>
+                                    iptNumber: () => <ElInputNumber v-model={state.editData.props[propName] }></ElInputNumber>
                                 }[propConfig.type]()}
                             </ElFormItem>
                         }))
