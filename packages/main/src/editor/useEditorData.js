@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import * as pageApi from '@/api/page'
 
+// 页面为空时的默认数据
 const initPageData = {
   container: {
       width: 800,
@@ -16,7 +17,6 @@ let instance
 
 // 初始化页面数据，包括 页面列表、当前页面（默认首页）、当前页面JSON数据，首次进入页面、页面跳转、刷新页面执行
 export const setEditorData = async (state, router) => {
-  console.log('setEditorData')
   // 获取当前路径
   let path = router?.currentRoute.value.fullPath ? router.currentRoute.value.fullPath : '/'
 
@@ -82,20 +82,21 @@ export function initEditorData() {
   }
 
   // 创建页面
-  const createPage = async (data) => {
+  const createPage = async (data, callback) => {
     let res = await pageApi.createPage(data);
     if (res.data.code === 200) {
       ElNotification({
         title: '创建成功',
         type: 'success'
       })
+      getPageList()
+      callback()
     } else {
       ElNotification({
         title: '创建失败',
         type: 'Error'
       })
     }
-    getPageList()
   }
 
   // 设置首页界面
@@ -106,13 +107,13 @@ export function initEditorData() {
         title: '设置首页成功',
         type: 'success'
       })
+      getPageList()
     } else { 
       ElNotification({
         title: '设置首页失败',
         type: 'Error'
       })
     }
-    getPageList()
   }
 
   // 删除页面
@@ -123,13 +124,13 @@ export function initEditorData() {
         title: '删除成功',
         type: 'success'
       })
+      getPageList()
     } else { 
       ElNotification({
         title: '删除失败',
         type: 'Error'
       })
     }
-    getPageList()
   }
 
   // 保存页面JSON数据
