@@ -36,7 +36,7 @@ export default defineComponent({
   setup(props) {
     const config = inject("config");
 
-    const { currentPageData, pageList, currentPage, createPage, setCurrentPage, setHomePage, deletePage } = useEditorData();
+    const { currentPageData, pageList, currentPage, createPage, updatePage, setCurrentPage, setHomePage, deletePage } = useEditorData();
 
     // 实现菜单的拖拽功能
     const { dragstart, dragend } = useMenuDragger(
@@ -72,7 +72,7 @@ export default defineComponent({
       ruleFormRef.value?.validate((valid) => {
         if (valid) {
           if (formData.value._id) {
-            
+            updatePage(formData.value._id, formData.value, () => {dialogVisible.value = false})
           } else {
             createPage(formData.value, () => {dialogVisible.value = false})
           }

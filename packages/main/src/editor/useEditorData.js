@@ -99,6 +99,24 @@ export function initEditorData() {
     }
   }
 
+  // 更新页面
+  const updatePage = async (_id, data, callback) => {
+    let res = await pageApi.updatePage(_id, data);
+    if (res.data.code === 200) {
+      ElNotification({
+        title: '更新成功',
+        type: 'success'
+      })
+      getPageList()
+      callback()
+    } else {
+      ElNotification({
+        title: '更新失败',
+        type: 'Error'
+      })
+    }
+  }
+
   // 设置首页界面
   const setHomePage = async (_id) => {
     let res = await pageApi.setHomePage(_id);
@@ -161,6 +179,7 @@ export function initEditorData() {
     getPageList,
     setHomePage,
     createPage,
+    updatePage,
     deletePage,
     savePageData,
     setCurrentPage
