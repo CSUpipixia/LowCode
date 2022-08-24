@@ -30,8 +30,7 @@ export default defineComponent({
   setup(props) {
     const config = inject("config");
 
-    const { currentPageData, pageList, currentPage, setCurrentPage } =
-      useEditorData();
+    const { currentPageData, pageList, currentPage, setCurrentPage } = useEditorData();
 
     // 实现菜单的拖拽功能
     const { dragstart, dragend } = useMenuDragger(
