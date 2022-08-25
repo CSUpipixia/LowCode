@@ -39,6 +39,17 @@ export function useCommand(data, focusData) {
      * keyboard: 快捷键
      * execute: 执行方法逻辑，默认包含一个 redo 方法，执行时会调用 redo 方法进行操作
      */ 
+    registry({
+        name: 'lines',
+        keyboard: 'ctrl+i',
+        execute() {
+            return {
+                redo() {
+                    console.log("划线弧线");
+                }
+            }
+        }
+    })
     // 还原
     registry({
         name: 'redo',
@@ -234,10 +245,11 @@ export function useCommand(data, focusData) {
     const keyboardEvent = (() => {
         const keyCodes = {
             90: 'z',
-            89: 'y'
+            89: 'y',
+            73: 'i'
         }
         const onKeydown = (e) => {
-            const { ctrlKey, keyCode } = e; // ctrl+z  / ctrl+y
+            const { ctrlKey, keyCode } = e; // ctrl+z  / ctrl+y 
             let keyString = [];
             if (ctrlKey) keyString.push('ctrl');
             keyString.push(keyCodes[keyCode]);

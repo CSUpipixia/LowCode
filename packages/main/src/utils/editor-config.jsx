@@ -137,7 +137,7 @@ registerConfig.register({
   },
   preview: () => (
     <ElImage
-      style={{ height: "100px", width: "200px" }}
+      style={{ height: "60px", width: "100px" }}
       src={
         "https://zhengxin-pub.cdn.bcebos.com/logopic/75137be3e725acb3bc18e5231130b639_fullsize.jpg"
       }
