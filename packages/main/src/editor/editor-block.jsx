@@ -36,7 +36,7 @@ export default defineComponent({
             const component = config.componentMap[props.block.key];
 
             // 获取 render 函数，传入属性渲染对应组件
-            const RenderComponent = component.render({
+            const RenderComponent = component.preview({
                 size: props.block.hasResize ? { width: props.block.width, height: props.block.height } : {},
                 props: props.block.props,
                 events: Object.keys(props.block.events || {}).reduce((prev, eventName) => {

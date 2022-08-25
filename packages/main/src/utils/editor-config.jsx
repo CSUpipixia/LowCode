@@ -1,7 +1,6 @@
 // 列表区可以显示所有的物料
 // key对应的组件映射关系
 import { ElButton, ElImage, ElInput, ElOption, ElSelect } from "element-plus";
-import Range from "../components/Range";
 
 function createEditorConfig() {
   const componentList = [];
@@ -29,7 +28,17 @@ const createIptNumberProp = (label) => ({ type: "iptNumber", label });
 registerConfig.register({
   label: "文本",
   icon: "icon-wenben",
-  preview: () => "预览文本",
+  preview: ({ props }) => (
+    <span
+      style={{
+        color: props.color,
+        fontSize: props.size + "px" || 16,
+        fontFamily: props.font,
+      }}
+    >
+      {props.text || "输入文字"}
+    </span>
+  ),
   render: ({ props }) => (
     <span
       style={{
@@ -38,7 +47,7 @@ registerConfig.register({
         fontFamily: props.font,
       }}
     >
-      {props.text || "渲染文本"}
+      {props.text || "输入文字"}
     </span>
   ),
   key: "text",
@@ -102,7 +111,15 @@ registerConfig.register({
     width: true,
     height: true,
   },
-  preview: () => <ElButton>预览按钮</ElButton>,
+  preview: ({ props, size }) => (
+    <ElButton
+      style={{ height: size.height + "px", width: size.width + "px" }}
+      type={props.type}
+      size={props.size}
+    >
+      {props.text || "渲染按钮"}
+    </ElButton>
+  ),
   render: ({ props, size }) => (
     <ElButton
       style={{ height: size.height + "px", width: size.width + "px" }}
@@ -138,15 +155,19 @@ registerConfig.register({
     width: true,
     height: true,
   },
-  preview: () => (
-    <ElImage
-      style={{ height: "60px", width: "100px" }}
-      src={
-        "https://zhengxin-pub.cdn.bcebos.com/logopic/75137be3e725acb3bc18e5231130b639_fullsize.jpg"
-      }
-      fit={"cover"}
-    ></ElImage>
-  ),
+  preview: ({ props, size }) => {
+    return (
+      <ElImage
+        style={{ height: size.height + "px", width: size.width + "px" }}
+        src={
+          props.src
+            ? props.src
+            : "https://zhengxin-pub.cdn.bcebos.com/logopic/75137be3e725acb3bc18e5231130b639_fullsize.jpg"
+        }
+        fit={props.fit}
+      ></ElImage>
+    );
+  },
   render: ({ props, size }) => {
     return (
       <ElImage
@@ -182,7 +203,14 @@ registerConfig.register({
     width: true,
     height: true,
   },
-  preview: () => <video src="" controls width="160" height="90"></video>,
+  preview: ({ props, size }) => {
+    return (
+      <video
+        style={{ height: size.height + "px", width: size.width + "px" }}
+        controls
+      ></video>
+    );
+  },
   render: ({ props, size }) => {
     return (
       <video
@@ -204,7 +232,21 @@ registerConfig.register({
 registerConfig.register({
   label: "下拉框",
   icon: "icon-xialakuang",
-  preview: () => <ElSelect modelValue=""></ElSelect>,
+  preview: ({ props, model }) => {
+    return (
+      <ElSelect {...model.default}>
+        {(props.options || []).map((opt, index) => {
+          return (
+            <ElOption
+              label={opt.label}
+              value={opt.value}
+              key={index}
+            ></ElOption>
+          );
+        })}
+      </ElSelect>
+    );
+  },
   render: ({ props, model }) => {
     return (
       <ElSelect {...model.default}>
@@ -243,7 +285,14 @@ registerConfig.register({
   resize: {
     width: true, // 更改输入框的横向大小
   },
-  preview: () => <ElInput placeholder="预览输入框"></ElInput>,
+  preview: ({ model, size, props }) => (
+    <ElInput
+      placeholder={props.text || "输入框占位值"}
+      {...model.default}
+      style={{ width: size.width + "px", height: size.height + "px" }}
+      type={props.type}
+    ></ElInput>
+  ),
   render: ({ model, size, props }) => (
     <ElInput
       placeholder={props.text || "输入框占位值"}
