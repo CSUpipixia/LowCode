@@ -11,6 +11,7 @@ import { ElButton, ElTabs, ElTabPane } from "element-plus";
 import { registerConfig as config } from "@/utils/editor-config";
 import { useEditorData } from "./useEditorData";
 import EditorLeft from "./components/EditorLeft";
+import './iconfont.js'
 
 export default defineComponent({
   props: {
@@ -57,11 +58,11 @@ export default defineComponent({
     const { commands } = useCommand(data, focusData); // []
 
     const buttons = [
-      { label: "撤销", icon: "icon-back", handler: () => commands.undo() },
-      { label: "重做", icon: "icon-forward", handler: () => commands.redo() },
+      { label: "撤销", icon: "icon-chexiao", handler: () => commands.undo() },
+      { label: "重做", icon: "icon-fanhui", handler: () => commands.redo() },
       {
         label: "导出",
-        icon: "icon-export",
+        icon: "icon-daochu",
         handler: () => {
           $dialog({
             title: "导出json使用",
@@ -71,7 +72,7 @@ export default defineComponent({
       },
       {
         label: "导入",
-        icon: "icon-import",
+        icon: "icon-daoru",
         handler: () => {
           $dialog({
             title: "导入json使用",
@@ -86,18 +87,17 @@ export default defineComponent({
       },
       {
         label: "置顶",
-        icon: "icon-place-top",
+        icon: "icon-control-top",
         handler: () => commands.placeTop(),
       },
       {
         label: "置底",
-        icon: "icon-place-bottom",
+        icon: "icon-control-bottom",
         handler: () => commands.placeBottom(),
       },
-      { label: "删除", icon: "icon-delete", handler: () => commands.delete() },
       {
         label: () => (previewRef.value ? "编辑" : "预览"),
-        icon: () => (previewRef.value ? "icon-edit" : "icon-browse"),
+        icon: () => (previewRef.value ? "icon-bianji" : "icon-preview"),
         handler: () => {
           previewRef.value = !previewRef.value;
           clearBlockFocus();
@@ -105,14 +105,14 @@ export default defineComponent({
       },
       {
         label: "保存",
-        icon: "icon-close",
+        icon: "icon-baocun",
         handler: () => {
           savePageData();
         },
       },
       {
         label: "运行",
-        icon: "icon-place-top",
+        icon: "icon-yunhang",
         // 跳转到应用部署地址
         handler: () => {},
       },
@@ -122,14 +122,19 @@ export default defineComponent({
       e.preventDefault();
 
       $dropdown({
-        el: e.target, // 以哪个元素为准产生一个dropdown
+        e, // 以哪个元素为准产生一个dropdown
         content: () => {
           return (
             <>
               <DropdownItem
-                label="删除"
-                icon="icon-delete"
-                onClick={() => commands.delete()}
+                label="查看"
+                icon="icon-browse"
+                onClick={() => {
+                  $dialog({
+                    title: "查看节点数据",
+                    content: JSON.stringify(block),
+                  });
+                }}
               ></DropdownItem>
               <DropdownItem
                 label="置顶"
@@ -140,16 +145,6 @@ export default defineComponent({
                 label="置底"
                 icon="icon-place-bottom"
                 onClick={() => commands.placeBottom()}
-              ></DropdownItem>
-              <DropdownItem
-                label="查看"
-                icon="icon-browse"
-                onClick={() => {
-                  $dialog({
-                    title: "查看节点数据",
-                    content: JSON.stringify(block),
-                  });
-                }}
               ></DropdownItem>
               <DropdownItem
                 label="导入"
@@ -165,6 +160,11 @@ export default defineComponent({
                     },
                   });
                 }}
+              ></DropdownItem>
+              <DropdownItem
+                label="删除"
+                icon="icon-delete"
+                onClick={() => commands.delete()}
               ></DropdownItem>
             </>
           );
@@ -198,13 +198,13 @@ export default defineComponent({
         <div class="editor">
           <div class="editor-top">
             {buttons.map((btn, index) => {
-              const icon =
-                typeof btn.icon == "function" ? btn.icon() : btn.icon;
-              const label =
-                typeof btn.label == "function" ? btn.label() : btn.label;
+              const icon = typeof btn.icon == "function" ? btn.icon() : btn.icon;
+              const label = typeof btn.label == "function" ? btn.label() : btn.label;
               return (
                 <div class="editor-top-button" onClick={btn.handler}>
-                  <i class={icon}></i>
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href={`#${icon}`}></use>
+                  </svg>
                   <span>{label}</span>
                 </div>
               );

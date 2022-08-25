@@ -8,13 +8,13 @@
   &-left {
     position: absolute;
     width: 335px;
-    top: 60px;
+    top: 62px;
     bottom: 0;
   }
   &-right {
     position: absolute;
     width: 300px;
-    top: 60px;
+    top: 62px;
     bottom: 0;
 
     .editor-right-tabs {
@@ -44,19 +44,24 @@
     border: 1px solid rgba(0,0,0,.05);
 
     &-button {
-        width: 60px;
-        height: 60px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient( #ece8ef , white);
-        user-select: none;
-        cursor: pointer;
-        color: #535353;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient( #ece8ef , white);
+      user-select: none;
+      cursor: pointer;
+      color: #535353;
 
       &+& {
           margin-left: 3px
+      }
+
+      span {
+        margin-top: 5px;
+        font-size: 12px;
       }
     }
   }
@@ -127,13 +132,13 @@
   border-top: 1px dashed red;
 }
 
-// dropdown
-
+// 右键菜单下拉框
 .dropdown {
   display: none;
   position: absolute;
   background: #fff;
   box-shadow: 2px 2px #ccc;
+  z-index: 9999;
 }
 
 .dropdown-isShow {
@@ -257,6 +262,15 @@
   cursor: pointer;
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
+}
+
+// iconfont
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }
 
 // flex布局
