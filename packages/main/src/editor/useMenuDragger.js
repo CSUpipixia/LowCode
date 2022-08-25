@@ -1,6 +1,5 @@
 import {events} from './events';
 export function useMenuDragger(containerRef, data){
-    console.log('当前点击的组件',containerRef);
     //
     let currentComponent = null;
     //dragenter当被鼠标拖动的对象进入其容器范围内时触发此事件
@@ -28,7 +27,25 @@ export function useMenuDragger(containerRef, data){
                 key:currentComponent.key,
                 alignCenter:true, // 设置松手的时候鼠标在组件居中
                 props:{},
-                model:{}
+                model:{},
+                events: {
+                    click: {
+                      actions: [
+                        {
+                          type: "openUrl",
+                          actionName: "跳转页面",
+                          config:[ {
+                            pageId:'',
+                            pageTitle:'',
+                            pagePath:'',
+                            pageParameters:[],   
+                          },
+                         ]
+                        }
+                      ]
+                    },
+                   
+                  }
             }
         ]}
         currentComponent = null;

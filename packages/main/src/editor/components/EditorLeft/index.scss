@@ -1,0 +1,53 @@
+.editor-left {
+  height: 100%;
+  contain: layout;
+
+
+  .tab-item {
+    height: 80px;
+  }
+
+  &-item {
+    width: 180px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    cursor: move;
+    user-select: none;
+    min-height: 100px;
+    position: relative;
+
+    >span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: rgb(96, 205, 224);
+        color: #fff;
+        padding: 4px;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #ccc;
+        opacity: 0.2;
+    }
+  }
+}
+
+.custom-tree-node {
+  display: flex;
+  padding-right: 8px;
+  font-size: 14px;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+}

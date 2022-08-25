@@ -10,7 +10,7 @@ export default defineComponent({
     },
     setup(props) {
         // 计算属性 - 计算出需要渲染组件的宽高 block top left
-        // console.log('props.data',props.data);
+        // console.log('props.block editor-block',props.block);
         const blockStyles = computed(() => ({
             top: `${props.block.top}px`,
             left: `${props.block.left}px`,

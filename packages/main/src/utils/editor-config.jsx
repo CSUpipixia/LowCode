@@ -104,11 +104,12 @@ registerConfig.register({
     height: true,
   },
   preview: () => <ElButton>预览按钮</ElButton>,
-  render: ({ props, size }) => (
+  render: ({ props, size, event }) => (
     <ElButton
-      style={{ height: size.height + "px", width: size.width + "px" }}
+    //   style={{ height: size.height + "px", width: size.width + "px" }}
       type={props.type}
       size={props.size}
+      onClick={()=>{event.click}}
     >
       {props.text || "渲染按钮"}
     </ElButton>
@@ -124,12 +125,41 @@ registerConfig.register({
       { label: "文本", value: "text" },
     ]),
     size: createSelectProp("按钮尺寸", [
-      { label: "默认", value: "" },
-      { label: "中等", value: "medium" },
+      { label: "默认", value: "default" },
+      { label: "大", value: "large" },
       { label: "小", value: "small" },
-      { label: "极小", value: "mini" },
+      
     ]),
   },
+  events: {
+    click: {
+      actions: [
+        {
+          type: "openUrl",
+          actionName: "跳转页面",
+          config:[ {
+            pageId:'',
+            pageTitle:'',
+            pagePath:'',
+            pageParameters:[],   
+          },
+         ]
+        }
+      ]
+    },
+    // alert:{
+    //   actions: [
+    //     {
+    //       type: "alertMes",
+    //       actionName: "弹出信息",
+    //       config: {
+    //         // pagePath: "123"
+    //       }
+    //     }
+    //   ]
+    // }
+  }
+
 });
 
 registerConfig.register({

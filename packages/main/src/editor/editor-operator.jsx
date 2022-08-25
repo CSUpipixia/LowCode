@@ -14,6 +14,8 @@ export default defineComponent({
     },
    
     setup(props, ctx) {
+        // console.log('event-operator',props.block);
+        console.log('event-operator-data',props.data);
 
         const config = inject('config'); // 组件的配置信息
 
@@ -23,20 +25,21 @@ export default defineComponent({
         // const { currentPageData } = useEditorData();
 
         const pageConfig = deepcopy(props.data.container)
-        console.log('pageConfig',pageConfig);
+        // console.log('pageConfig',pageConfig);
         
             const reset = () => {
                 if (!props.block) { // 说明要绑定的是容器的宽度和高度
                     // console.log('props.data.container', props.data.container);
                     state.editData = deepcopy(props.data.container)
-                    console.log('state.editData.background', state.editData.background);
+                    // console.log('state.editData.background', state.editData.background);
                 } else {
+                    console.log('props.block-operator',props.block);
                     state.editData = deepcopy(props.block);
                 }
             }
             const apply = () => {
                 if (!props.block) { // 更改组件容器的大小
-                    console.log('apply ', state.editData);
+                    // console.log('apply ', state.editData);
                     props.updateContainer({ ...props.data, container: state.editData });
                 } else { // 更改组件的配置
                     props.updateBlock(state.editData, props.block);
@@ -48,7 +51,7 @@ export default defineComponent({
                 const fileReader = new FileReader();
                 fileReader.onload = (event) => {
                     // pageConfig.bgImage = event.target?.result
-                    console.log('url',fileReader.readAsDataURL(file));
+                    // console.log('url',fileReader.readAsDataURL(file));
                     pageConfig.bgImage = event.target?.result
         
                     
@@ -58,7 +61,7 @@ export default defineComponent({
                 let content = []
                 // 没有选中数据，显示默认内容，容器宽度和容器高度
                 if (!props.block) {
-                    console.log('state.editData.width', state.editData.width);
+                    // console.log('state.editData.width', state.editData.width);
                     content.push(<>
                         <ElFormItem label="容器宽度">
                             <ElInputNumber v-model={state.editData.width}></ElInputNumber>
@@ -92,11 +95,9 @@ export default defineComponent({
                         //                                                   key         value
                         // console.log('component.props',component.props);
                         content.push(Object.entries(component.props).map(([propName, propConfig]) => {
-                            console.log('propName11',propName);
-                            // console.log('propConfig',propConfig);
-                            // console.log('Object.entries(component.props)',Object.entries(component.props));
-                            // console.log('[propName, propConfig]',[propName, propConfig]);
-                            console.log('state.editData.props[propName]',state.editData.props[propName]);
+                            // console.log('propName11',propName);
+                   
+                            // console.log('state.editData.props[propName]',state.editData.props[propName]);
                             return <ElFormItem label={propConfig.label}>
                                 {/* 根据 propConfig.type 匹配渲染设置框 */}
                                 {{
@@ -112,7 +113,7 @@ export default defineComponent({
                                     table: () => <TableEditor propConfig={propConfig} v-model={state.editData.props[propName]} ></TableEditor>,
                                     iptNumber: () => <ElInputNumber v-model={state.editData.props[propName] }></ElInputNumber>
                                 }[propConfig.type]()}
-                            </ElFormItem>
+                            </ElFormItem>   
                         }))
                     }
 

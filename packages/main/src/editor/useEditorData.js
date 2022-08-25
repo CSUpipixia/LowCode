@@ -1,15 +1,25 @@
-
 import { reactive, toRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import * as pageApi from '@/api/page'
 
+const initPageData = {
+  container: {
+      width: 800,
+      height: 550
+  },
+  blocks: [
+  ]
+}
+
+let instance
+
 // 初始化页面数据，包括 页面列表、当前页面（默认首页）、当前页面JSON数据，首次进入页面、页面跳转、刷新页面执行
-export const initEditorData = async (state, router) => {
+export const setEditorData = async (state, router) => {
+  console.log('setEditorData')
   // 获取当前路径
   let path = router?.currentRoute.value.fullPath ? router.currentRoute.value.fullPath : '/'
-  
-  console.log('initData', path)
+
   // 获取所有页面列表
   let res = await pageApi.queryPageList()
   state.pageList = res.data.data
@@ -36,45 +46,33 @@ export const initEditorData = async (state, router) => {
   }
 
   // 获取页面数据
-  state.currentPageData = state.currentPage.pageData ? state.currentPage.pageData : state.currentPageData
+  state.currentPageData = state.currentPage.pageData ? state.currentPage.pageData : initPageData
 
   // 设置当前页面
-  console.log('currentPage', state.currentPage)
   router.replace(`/${state.currentPage._id}` || '/');
 }
 
-export function useEditorData() {
+export function initEditorData() {
   const pageList = []
   const currentPage = {}
-  const currentPageData = {
-    container: {
-        width: 800,
-        height: 550
-    },
-    blocks: [
-    ]
-}
-
+  const currentPageData = initPageData
 
   const route = useRoute();
   const router = useRouter();
 
-
   const state = reactive({
     pageList,
     currentPage,
-    currentPageData,
-  });
-
+    currentPageData
+  })
+// console.log('state',state);
   // 初始化数据
-
-  initEditorData(state, router)
+  setEditorData(state, router)
 
   // 路由变化时更新当前操作的页面
-  watch(
+  watch (
     () => route.path,
-
-    (url) => initEditorData(state, router),
+    (url) => setEditorData(state, router),
   );
 
   // 获取所有页面
@@ -150,15 +148,28 @@ export function useEditorData() {
     }
   }
 
+  // 设置当前页面
+  const setCurrentPage = (page) => {
+    router.push('/' + page._id)
+  }
+
   return {
     pageList: toRef(state, 'pageList'),
     currentPage: toRef(state, 'currentPage'),
     currentPageData: toRef(state, 'currentPageData'),
     getPageList,
     setHomePage,
-
     createPage,
     deletePage,
     savePageData,
-  };
+    setCurrentPage,
+    // pageList
+  }
+}
+
+export const useEditorData = () => {
+  if (!instance) {
+    instance = initEditorData()
+  }
+  return instance
 }
