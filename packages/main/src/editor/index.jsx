@@ -112,7 +112,7 @@ export default defineComponent({
       },
       {
         label: "运行",
-        icon: "icon-reset",
+        icon: "icon-place-top",
         // 跳转到应用部署地址
         handler: () => {},
       },
