@@ -60,17 +60,18 @@ export function initEditorData() {
   const route = useRoute();
   const router = useRouter();
 
+>>>>>>> feature/event
   const state = reactive({
     pageList,
     currentPage,
-    currentPageData
-  })
+    currentPageData,
+  });
 
   // 初始化数据
   setEditorData(state, router)
 
   // 路由变化时更新当前操作的页面
-  watch (
+  watch(
     () => route.path,
     (url) => setEditorData(state, router),
   );
