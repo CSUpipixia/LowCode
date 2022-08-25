@@ -12,6 +12,8 @@ export default defineComponent({
         const res = await getHomePage();
         const page = res.data.data;
         console.log('page', res.data.data);
+        document.title = page.title
+        router.replace(`/${page.path}`);
       } else {
         const res = await getPageByPath(path.slice(1))
         console.log('res', res)
