@@ -23,6 +23,7 @@ export function useFocus(data,previewRef,callback) { // 获取哪些元素被选
         selectIndex.value = -1;
     }
     const blockMousedown = (e, block,index) => {
+
         if(previewRef.value) return 
         e.preventDefault();
         e.stopPropagation();
@@ -49,4 +50,5 @@ export function useFocus(data,previewRef,callback) { // 获取哪些元素被选
         lastSelectBlock,
         clearBlockFocus
     }
+
 }
