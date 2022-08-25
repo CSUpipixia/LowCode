@@ -83,7 +83,7 @@ export default defineComponent({
     return () => (
       <>
         <div>
-          <ElTabs model-value={"page"} tab-position="left" class="editor-left">
+          <ElTabs model-value={"page"} tab-position="left" type="border-card" class="editor-left">
             <ElTabPane name={"page"} lazy>
               {{
                 default: () => (
@@ -183,18 +183,20 @@ export default defineComponent({
               {{
                 default: () => (
                   <>
-                    {/* 根据注册列表 渲染对应的内容  可以实现h5的拖拽*/}
-                    {config.componentList.map((component) => (
-                      <div
-                        class="editor-left-item"
-                        draggable
-                        onDragstart={(e) => dragstart(e, component)}
-                        onDragend={dragend}
-                      >
-                        <span>{component.label}</span>
-                        <div>{component.preview()}</div>
-                      </div>
-                    ))}
+                    <ul class="editor-left-wrap flex flex-wrap">
+                      {/* 根据注册列表 渲染对应的内容  可以实现h5的拖拽*/}
+                      {config.componentList.map((component) => (
+                        <li
+                          class="editor-left-item"
+                          draggable
+                          onDragstart={(e) => dragstart(e, component)}
+                          onDragend={dragend}
+                        >
+                          <i class={component.icon}></i>
+                          <span>{component.label}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </>
                 ),
                 label: () => (

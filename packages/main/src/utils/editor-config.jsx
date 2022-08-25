@@ -28,6 +28,7 @@ const createIptNumberProp = (label) => ({ type: "iptNumber", label });
 
 registerConfig.register({
   label: "文本",
+  icon: "icon-wenben",
   preview: () => "预览文本",
   render: ({ props }) => (
     <span
@@ -96,6 +97,7 @@ registerConfig.register({
 
 registerConfig.register({
   label: "按钮",
+  icon: "icon-anniu",
   resize: {
     width: true,
     height: true,
@@ -131,6 +133,7 @@ registerConfig.register({
 
 registerConfig.register({
   label: "图片",
+  icon: "icon-tupian",
   resize: {
     width: true,
     height: true,
@@ -174,6 +177,7 @@ registerConfig.register({
 
 registerConfig.register({
   label: "视频",
+  icon: "icon-shipin",
   resize: {
     width: true,
     height: true,
@@ -199,6 +203,7 @@ registerConfig.register({
 
 registerConfig.register({
   label: "下拉框",
+  icon: "icon-xialakuang",
   preview: () => <ElSelect modelValue=""></ElSelect>,
   render: ({ props, model }) => {
     return (
@@ -234,6 +239,7 @@ registerConfig.register({
 
 registerConfig.register({
   label: "输入框",
+  icon: "icon-danhangshuru",
   resize: {
     width: true, // 更改输入框的横向大小
   },
@@ -261,27 +267,27 @@ registerConfig.register({
   },
 });
 
-registerConfig.register({
-  label: "范围选择器",
-  preview: () => <Range placeholder="预览输入框"></Range>,
-  render: ({ model }) => {
-    return (
-      <Range
-        {...{
-          start: model.start.modelValue, // @update:start
-          end: model.end.modelValue,
-          "onUpdate:start": model.start["onUpdate:modelValue"],
-          "onUpdate:end": model.end["onUpdate:modelValue"],
-        }}
-      ></Range>
-    );
-  },
-  model: {
-    start: "开始范围字段",
-    end: "结束范围字段",
-  },
-  key: "range",
-});
+// registerConfig.register({
+//   label: "范围选择器",
+//   preview: () => <Range placeholder="预览输入框"></Range>,
+//   render: ({ model }) => {
+//     return (
+//       <Range
+//         {...{
+//           start: model.start.modelValue, // @update:start
+//           end: model.end.modelValue,
+//           "onUpdate:start": model.start["onUpdate:modelValue"],
+//           "onUpdate:end": model.end["onUpdate:modelValue"],
+//         }}
+//       ></Range>
+//     );
+//   },
+//   model: {
+//     start: "开始范围字段",
+//     end: "结束范围字段",
+//   },
+//   key: "range",
+// });
 
 // model:{// {start:'start',end:'end'}
 //     start:'开始字段',

@@ -1,44 +1,39 @@
 .editor-left {
   height: 100%;
   contain: layout;
-
-
+  
   .tab-item {
     height: 80px;
   }
 
-  &-item {
-    width: 180px;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fff;
-    padding: 20px;
-    box-sizing: border-box;
-    cursor: move;
-    user-select: none;
-    min-height: 100px;
-    position: relative;
+  &-wrap {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    padding: 0px !important;
+    margin: 0px !important;
+  }
 
-    >span {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background: rgb(96, 205, 224);
-        color: #fff;
-        padding: 4px;
+  &-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+    margin-bottom: 8px;
+    padding: 10px 0;
+    font-size: 12px;
+    color: #666;
+    border: 1px solid rgba(0,0,0,.05);
+    margin: 0 5px 5px 0;
+
+    i {
+      font-size: 18px;
+      margin-top: 5px;
+      margin-bottom: 10px;
     }
 
-    &::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: #ccc;
-        opacity: 0.2;
+    &:hover {
+      background: rgb(249, 249, 255);
     }
   }
 }
