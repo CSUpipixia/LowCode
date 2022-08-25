@@ -60,7 +60,6 @@ export function initEditorData() {
   const route = useRoute();
   const router = useRouter();
 
->>>>>>> feature/event
   const state = reactive({
     pageList,
     currentPage,
