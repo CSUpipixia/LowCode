@@ -16,6 +16,10 @@
     width: 300px;
     top: 60px;
     bottom: 0;
+
+    .editor-right-tabs {
+      height: 100%;
+    }
   }
   &-toptry {
     position: absolute;
@@ -30,50 +34,43 @@
     right: 0;
   }
 
-    &-top {
-        position: absolute;
-        margin-top:0px;
-        right: 0px;
-        left: 0px;
+  &-top {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient( #ece8ef , white);
+    border-radius: 50px;
+    border: 1px solid rgba(0,0,0,.05);
+
+    &-button {
+        width: 60px;
         height: 60px;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         background: linear-gradient( #ece8ef , white);
-        border-radius: 50px;
-        border-bottom-style:dotted;
-        border-color:#ece8ef;
+        user-select: none;
+        cursor: pointer;
+        color: #535353;
 
-
-        &-button {
-            width: 60px;
-            height: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        ;
-            background: linear-gradient( #ece8ef , white);
-            user-select: none;
-            cursor: pointer;
-            color: #535353;
-
-            &+& {
-                margin-left: 3px
-            }
-        }
+      &+& {
+          margin-left: 3px
+      }
     }
+  }
 
-    &-container {
-        padding-top: 0px;
-        padding: 80px 270px 0;
-        height: 100%;
-        box-sizing: border-box;
+  &-container {
+    padding-top: 0px;
+    padding: 30px 270px 0;
+    height: 100%;
+    box-sizing: border-box;
 
-        &-canvas {
+    &-canvas {
 
-            overflow: scroll;
-            height: 100%;
+      overflow: scroll;
+      height: 100%;
 
       &__content {
         margin: 20px auto;

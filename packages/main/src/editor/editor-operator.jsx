@@ -84,17 +84,10 @@ export default defineComponent({
                         </ElFormItem>
                     </>)
                 } else {
-
-                    let component = config.componentMap[props.block.key];//拿到的是最后点击的单个组件
+                    let component = config.componentMap[props.block.key]; //拿到最后点击的单个组件
                     // console.log('component',component);
-                    if (component && component.props) { // {text:{type:'xxx'},size:{},color:{}}
-                        // {text:xxx,size:13px,color:#fff}
-                        // console.log('componet.props',component.props);
+                    if (component && component.props) {
                         content.push(Object.entries(component.props).map(([propName, propConfig]) => {
-                            // console.log('propName',propName);
-                            // console.log('propConfig.type',propConfig.type);
-                            //console.log('iptnum',state.editData.props[propName]);
-                            // console.log('state.editData.props[propName]',state.editData.props[propName]);
                             return <ElFormItem label={propConfig.label}>
                                 {/* 根据 propConfig.type 匹配渲染设置框 */}
                                 {{
@@ -122,7 +115,6 @@ export default defineComponent({
                             </ElFormItem>
                         }))
                     }
-
                 }
 
 

@@ -210,9 +210,11 @@ export default defineComponent({
               );
             })}
           </div>
-          <EditorLeft containerRef={containerRef}></EditorLeft>
+          <div class="editor-left">
+            <EditorLeft containerRef={containerRef}></EditorLeft>
+          </div>
           <div class="editor-right">
-            <ElTabs model-value={"props"}>
+            <ElTabs model-value={"props"}  type="border-card" class="editor-right-tabs">
               <ElTabPane label="属性" name="props">
                 <EditorOperator
                   block={lastSelectBlock.value}
@@ -239,7 +241,7 @@ export default defineComponent({
           </div>
           <div class="editor-container">
             {/*  负责产生滚动条 */}
-            <div class="editor-container-canvas">
+            {/* <div class="editor-container-canvas"> */}
               {/* 产生内容区域 */}
               <div
                 class="editor-container-canvas__content"
@@ -264,7 +266,7 @@ export default defineComponent({
                   <div class="line-y" style={{ top: markLine.y + "px" }}></div>
                 )}
               </div>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       );
