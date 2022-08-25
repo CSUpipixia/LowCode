@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export function createAxios(options = {}) {
   const defaultOptions = {
-    baseURL: 'http://114.132.122.184:9000',
+    baseURL: import.meta.env.VITE_BASE_API_URL,
     timeout: 12000,
   }
   const service = axios.create({
