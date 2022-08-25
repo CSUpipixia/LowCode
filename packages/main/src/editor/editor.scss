@@ -65,6 +65,7 @@
 
     &-top {
         position: absolute;
+        margin-top:0px;
         right: 0px;
         left: 0px;
         height: 60px;
@@ -73,6 +74,8 @@
         align-items: center;
         background: linear-gradient( #ece8ef , white);
         border-radius: 50px;
+        border-bottom-style:dotted;
+        border-color:#ece8ef;
 
 
         &-button {
@@ -95,11 +98,13 @@
     }
 
     &-container {
+        padding-top: 0px;
         padding: 80px 270px 0;
         height: 100%;
         box-sizing: border-box;
 
         &-canvas {
+
             overflow: scroll;
             height: 100%;
 
