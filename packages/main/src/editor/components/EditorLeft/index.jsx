@@ -129,7 +129,7 @@ export default defineComponent({
                     {{
                       default: ({ node, data }) => (
                         <>
-                          <span class="custom-tree-node">
+                          <span class="page-tree-node">
                             <span>
                               {data.isHomePage ? (
                                 <ElIcon>
