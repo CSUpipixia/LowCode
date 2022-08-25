@@ -42,7 +42,6 @@ export default defineComponent({
 
         }
         const onmouseup = () => {
-            console.log('mouseup')
             document.body.removeEventListener('mousemove', onmousemove)
             document.body.removeEventListener('mouseup', onmouseup)
         }

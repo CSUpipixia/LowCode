@@ -23,13 +23,13 @@ export default defineComponent({
         // const { currentPageData } = useEditorData();
 
         const pageConfig = deepcopy(props.data.container)
-        console.log('pageConfig',pageConfig);
+        //console.log('pageConfig',pageConfig);
         
             const reset = () => {
                 if (!props.block) { // 说明要绑定的是容器的宽度和高度
-                    console.log('props.data.container', props.data.container);
+                    //console.log('props.data.container', props.data.container);
                     state.editData = deepcopy(props.data.container)
-                    console.log('state.editData.background', state.editData.background);
+                    //console.log('state.editData.background', state.editData.background);
                 } else {
                     state.editData = deepcopy(props.block);
                 }
@@ -48,7 +48,7 @@ export default defineComponent({
                 const fileReader = new FileReader();
                 fileReader.onload = (event) => {
                     // pageConfig.bgImage = event.target?.result
-                    console.log('url',fileReader.readAsDataURL(file));
+                    //console.log('url',fileReader.readAsDataURL(file));
                     pageConfig.bgImage = event.target?.result
         
                     
@@ -93,7 +93,7 @@ export default defineComponent({
                         content.push(Object.entries(component.props).map(([propName, propConfig]) => {
                             // console.log('propName',propName);
                             // console.log('propConfig.type',propConfig.type);
-                            console.log('iptnum',state.editData.props[propName]);
+                            //console.log('iptnum',state.editData.props[propName]);
                             // console.log('state.editData.props[propName]',state.editData.props[propName]);
                             return <ElFormItem label={propConfig.label}>
                                 {/* 根据 propConfig.type 匹配渲染设置框 */}

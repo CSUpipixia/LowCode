@@ -3,12 +3,23 @@ import { useRoute, useRouter } from 'vue-router'
 import { ElNotification } from 'element-plus'
 import * as pageApi from '@/api/page'
 
+// 页面为空时的默认数据
+const initPageData = {
+  container: {
+      width: 800,
+      height: 550
+  },
+  blocks: [
+  ]
+}
+
+let instance
+
 // 初始化页面数据，包括 页面列表、当前页面（默认首页）、当前页面JSON数据，首次进入页面、页面跳转、刷新页面执行
-export const initEditorData = async (state, router) => {
+export const setEditorData = async (state, router) => {
   // 获取当前路径
   let path = router?.currentRoute.value.fullPath ? router.currentRoute.value.fullPath : '/'
-  
-  console.log('initData', path)
+
   // 获取所有页面列表
   let res = await pageApi.queryPageList()
   state.pageList = res.data.data
@@ -35,24 +46,16 @@ export const initEditorData = async (state, router) => {
   }
 
   // 获取页面数据
-  state.currentPageData = state.currentPage.pageData ? state.currentPage.pageData : state.currentPageData
+  state.currentPageData = state.currentPage.pageData ? state.currentPage.pageData : initPageData
 
   // 设置当前页面
-  console.log('currentPage', state.currentPage)
   router.replace(`/${state.currentPage._id}` || '/');
 }
 
-export function useEditorData() {
+export function initEditorData() {
   const pageList = []
   const currentPage = {}
-  const currentPageData = {
-    container: {
-        width: 800,
-        height: 550
-    },
-    blocks: [
-    ]
-}
+  const currentPageData = initPageData
 
   const route = useRoute();
   const router = useRouter();
@@ -60,16 +63,16 @@ export function useEditorData() {
   const state = reactive({
     pageList,
     currentPage,
-    currentPageData
-  })
+    currentPageData,
+  });
 
   // 初始化数据
-  initEditorData(state, router)
+  setEditorData(state, router)
 
   // 路由变化时更新当前操作的页面
-  watch (
+  watch(
     () => route.path,
-    (url) => initEditorData(state, router),
+    (url) => setEditorData(state, router),
   );
 
   // 获取所有页面
@@ -79,20 +82,39 @@ export function useEditorData() {
   }
 
   // 创建页面
-  const createPage = async (data) => {
+  const createPage = async (data, callback) => {
     let res = await pageApi.createPage(data);
     if (res.data.code === 200) {
       ElNotification({
         title: '创建成功',
         type: 'success'
       })
+      getPageList()
+      callback()
     } else {
       ElNotification({
         title: '创建失败',
         type: 'Error'
       })
     }
-    getPageList()
+  }
+
+  // 更新页面
+  const updatePage = async (_id, data, callback) => {
+    let res = await pageApi.updatePage(_id, data);
+    if (res.data.code === 200) {
+      ElNotification({
+        title: '更新成功',
+        type: 'success'
+      })
+      getPageList()
+      callback()
+    } else {
+      ElNotification({
+        title: '更新失败',
+        type: 'Error'
+      })
+    }
   }
 
   // 设置首页界面
@@ -103,13 +125,13 @@ export function useEditorData() {
         title: '设置首页成功',
         type: 'success'
       })
+      getPageList()
     } else { 
       ElNotification({
         title: '设置首页失败',
         type: 'Error'
       })
     }
-    getPageList()
   }
 
   // 删除页面
@@ -120,13 +142,13 @@ export function useEditorData() {
         title: '删除成功',
         type: 'success'
       })
+      getPageList()
     } else { 
       ElNotification({
         title: '删除失败',
         type: 'Error'
       })
     }
-    getPageList()
   }
 
   // 保存页面JSON数据
@@ -145,6 +167,11 @@ export function useEditorData() {
     }
   }
 
+  // 设置当前页面
+  const setCurrentPage = (page) => {
+    router.push('/' + page._id)
+  }
+
   return {
     pageList: toRef(state, 'pageList'),
     currentPage: toRef(state, 'currentPage'),
@@ -152,7 +179,16 @@ export function useEditorData() {
     getPageList,
     setHomePage,
     createPage,
+    updatePage,
     deletePage,
-    savePageData
+    savePageData,
+    setCurrentPage
   }
+}
+
+export const useEditorData = () => {
+  if (!instance) {
+    instance = initEditorData()
+  }
+  return instance
 }

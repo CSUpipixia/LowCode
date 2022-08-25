@@ -15,6 +15,14 @@ export const createPage = (data) => {
   })
 }
 
+export const updatePage = (_id, data) => {
+  return request({
+    url: `/page/${_id}/update`,
+    method: 'POST',
+    data
+  })
+}
+
 export const getPage = (_id) => {
   return request({
     url: `/page/${_id}`,

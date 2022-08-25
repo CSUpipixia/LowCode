@@ -2,6 +2,7 @@ import { reactive } from "vue";
 import { events } from "./events";
 
 export function useBlockDragger(focusData, lastSelectBlock, data) {
+
     let dragState = {
         startX: 0,
         startY: 0,
@@ -29,10 +30,11 @@ export function useBlockDragger(focusData, lastSelectBlock, data) {
                         top: 0,
                         left: 0,
                         width: data.value.container.width,
-                        height: data.value.container.height
+                        height: data.value.container.height  //初始值为容器高度
                     }
                 ].forEach((block) => {
                     const { top: ATop, left: ALeft, width: AWidth, height: AHeight } = block;
+                    //console.log( AWidth );
                     // 当此元素拖拽到和A元素top一致的时候，要显示这根辅助线，辅助线的位置就是ATop
                     lines.y.push({ showTop: ATop, top: ATop });
                     lines.y.push({ showTop: ATop, top: ATop - BHeight }); // 顶对底
@@ -53,6 +55,7 @@ export function useBlockDragger(focusData, lastSelectBlock, data) {
         document.addEventListener('mouseup', mouseup)
     }
     const mousemove = (e) => {
+
         let { clientX: moveX, clientY: moveY } = e;
         if(!dragState.dragging){
             dragState.dragging = true;
@@ -92,9 +95,16 @@ export function useBlockDragger(focusData, lastSelectBlock, data) {
 
         let durX = moveX - dragState.startX; // 之前和之后的距离
         let durY = moveY - dragState.startY;
+        let container_width = data.value.container.width;
+        let container_height = data.value.container.height;
         focusData.value.focus.forEach((block, idx) => {
             block.top = dragState.startPos[idx].top + durY;
             block.left = dragState.startPos[idx].left + durX;
+            //限制元素不超过画布
+            if(block.left<0) block.left = 0;
+            if(block.left>(container_width-block.width)) block.left = container_width - block.width;
+            if(block.top<0) block.top = 0;
+            if(block.top>(container_height-block.height)) block.top = container_height - block.height;
         })
     }
     const mouseup = (e) => {
