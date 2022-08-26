@@ -41,8 +41,7 @@ export default defineComponent({
             let Message = [];
             let visual = false;
 
-
-            if (props.block) {
+            if (props.block && props.block.key === 'button') {
                 visual = true
                 let component = config.componentMap[props.block.key];
                 Message.push(component.events.click.actions.map((item) => {
@@ -60,13 +59,13 @@ export default defineComponent({
 
             return <div>
                 {
-                    visual ? (
+                    Message.length !== 0 ? (
                         <div>
                             {Message}
-                            <ElButton onClick={apply}>添加事件</ElButton>
+                            <ElButton onClick={apply}>保存</ElButton>
                         </div>
                     ) : (<div>
-                        <h3 align="center">请选择组件</h3>
+                            无
                     </div>)
                 }
             </div>
