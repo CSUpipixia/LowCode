@@ -27,7 +27,6 @@ import {
   Tickets,
   House,
 } from "@element-plus/icons-vue";
-// import "./index.scss";
 
 export default defineComponent({
   props: {
