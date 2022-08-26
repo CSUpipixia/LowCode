@@ -34,13 +34,12 @@ export function useMenuDragger(containerRef, data){
                         {
                           type: "openUrl",
                           actionName: "跳转页面",
-                          config:[ {
+                          config:{
                             pageId:'',
                             pageTitle:'',
                             pagePath:'',
                             pageParameters:[],   
-                          },
-                         ]
+                          }
                         }
                       ]
                     },

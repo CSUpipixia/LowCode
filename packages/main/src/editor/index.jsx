@@ -11,8 +11,8 @@ import { ElButton, ElTabs, ElTabPane } from "element-plus";
 import { registerConfig as config } from "@/utils/editor-config";
 import { useEditorData } from "./useEditorData";
 import EditorLeft from "./components/EditorLeft";
-import Editorevent from "./editor-event"
-import './iconfont.js'
+import Editorevent from "./editor-event";
+import "./iconfont.js";
 
 export default defineComponent({
   props: {
@@ -23,7 +23,7 @@ export default defineComponent({
     const previewRef = ref(false);
     const editorRef = ref(true);
 
-    const { currentPageData, savePageData,pageList } = useEditorData();
+    const { currentPageData, savePageData, pageList } = useEditorData();
     const data = currentPageData;
 
     const containerStyles = computed(() => ({
@@ -183,8 +183,8 @@ export default defineComponent({
             {data.value.blocks.map((block, index) => (
               <EditorBlock
                 class="editor-block-preview"
-                block={block} //组件数据
-                formData={props.formData} //data
+                block={block} // 组件数据
+                formData={props.formData} // data
               ></EditorBlock>
             ))}
           </div>
@@ -199,8 +199,10 @@ export default defineComponent({
         <div class="editor">
           <div class="editor-top">
             {buttons.map((btn, index) => {
-              const icon = typeof btn.icon == "function" ? btn.icon() : btn.icon;
-              const label = typeof btn.label == "function" ? btn.label() : btn.label;
+              const icon =
+                typeof btn.icon == "function" ? btn.icon() : btn.icon;
+              const label =
+                typeof btn.label == "function" ? btn.label() : btn.label;
               return (
                 <div class="editor-top-button" onClick={btn.handler}>
                   <svg class="icon" aria-hidden="true">
@@ -215,7 +217,11 @@ export default defineComponent({
             <EditorLeft containerRef={containerRef}></EditorLeft>
           </div>
           <div class="editor-right">
-            <ElTabs model-value={"props"}  type="border-card" class="editor-right-tabs">
+            <ElTabs
+              model-value={"props"}
+              type="border-card"
+              class="editor-right-tabs"
+            >
               <ElTabPane label="属性" name="props">
                 <EditorOperator
                   block={lastSelectBlock.value}
@@ -225,15 +231,13 @@ export default defineComponent({
                 ></EditorOperator>
               </ElTabPane>
               <ElTabPane label="事件" name="events">
-                        
-                        <Editorevent
-                          block={lastSelectBlock.value}
-                          data={data.value}
-                          pageList={pageList.value}
-                          updateBlock={commands.updateBlock}
-                        ></Editorevent>
-                       
-                      </ElTabPane>
+                <Editorevent
+                  block={lastSelectBlock.value}
+                  data={data.value}
+                  pageList={pageList.value}
+                  updateBlock={commands.updateBlock}
+                ></Editorevent>
+              </ElTabPane>
               <ElTabPane label="动画" name="animates">
                 {lastSelectBlock.value ? (
                   <ElButton>fade效果</ElButton>
@@ -246,30 +250,30 @@ export default defineComponent({
           <div class="editor-container">
             {/*  负责产生滚动条 */}
             {/* <div class="editor-container-canvas"> */}
-              {/* 产生内容区域 */}
-              <div
-                class="editor-container-canvas__content"
-                style={containerStyles.value}
-                ref={containerRef}
-                onMousedown={containerMousedown}
-              >
-                {data.value.blocks.map((block, index) => (
-                  <EditorBlock
-                    class={block.focus ? "editor-block-focus" : ""}
-                    block={block}
-                    onMousedown={(e) => blockMousedown(e, block, index)}
-                    onContextmenu={(e) => onContextMenuBlock(e, block)}
-                    formData={props.formData}
-                  ></EditorBlock>
-                ))}
+            {/* 产生内容区域 */}
+            <div
+              class="editor-container-canvas__content"
+              style={containerStyles.value}
+              ref={containerRef}
+              onMousedown={containerMousedown}
+            >
+              {data.value.blocks.map((block, index) => (
+                <EditorBlock
+                  class={block.focus ? "editor-block-focus" : ""}
+                  block={block}
+                  onMousedown={(e) => blockMousedown(e, block, index)}
+                  onContextmenu={(e) => onContextMenuBlock(e, block)}
+                  formData={props.formData}
+                ></EditorBlock>
+              ))}
 
-                {markLine.x !== null && (
-                  <div class="line-x" style={{ left: markLine.x + "px" }}></div>
-                )}
-                {markLine.y !== null && (
-                  <div class="line-y" style={{ top: markLine.y + "px" }}></div>
-                )}
-              </div>
+              {markLine.x !== null && (
+                <div class="line-x" style={{ left: markLine.x + "px" }}></div>
+              )}
+              {markLine.y !== null && (
+                <div class="line-y" style={{ top: markLine.y + "px" }}></div>
+              )}
+            </div>
             {/* </div> */}
           </div>
         </div>

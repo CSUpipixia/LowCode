@@ -10,3 +10,9 @@
     bottom: 0;
   }
 }
+
+.editor-block-render {
+  &::after {
+    display: none;
+  }
+}
