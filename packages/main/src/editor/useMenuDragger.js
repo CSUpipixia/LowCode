@@ -27,7 +27,25 @@ export function useMenuDragger(containerRef, data){
                 key:currentComponent.key,
                 alignCenter:true, // 设置松手的时候鼠标在组件居中
                 props:{},
-                model:{}
+                model:{},
+                events: {
+                    click: {
+                      actions: [
+                        {
+                          type: "openUrl",
+                          actionName: "跳转页面",
+                          config:[ {
+                            pageId:'',
+                            pageTitle:'',
+                            pagePath:'',
+                            pageParameters:[],   
+                          },
+                         ]
+                        }
+                      ]
+                    },
+                   
+                  }
             }
         ]}
         currentComponent = null;

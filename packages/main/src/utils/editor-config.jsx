@@ -103,11 +103,12 @@ registerConfig.register({
     height: true,
   },
   preview: () => <ElButton>预览按钮</ElButton>,
-  render: ({ props, size }) => (
+  render: ({ props, size,event }) => (
     <ElButton
       style={{ height: size.height + "px", width: size.width + "px" }}
       type={props.type}
       size={props.size}
+      onClick={()=>{event.click}}
     >
       {props.text || "渲染按钮"}
     </ElButton>
@@ -129,6 +130,24 @@ registerConfig.register({
       { label: "极小", value: "mini" },
     ]),
   },
+  events: {
+    click: {
+      actions: [
+        {
+          type: "openUrl",
+          actionName: "跳转页面",
+          config:[ {
+            pageId:'',
+            pageTitle:'',
+            pagePath:'',
+            pageParameters:[],   
+          },
+         ]
+        }
+      ]
+    },
+   
+  }
 });
 
 registerConfig.register({

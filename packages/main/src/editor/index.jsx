@@ -11,6 +11,7 @@ import { ElButton, ElTabs, ElTabPane } from "element-plus";
 import { registerConfig as config } from "@/utils/editor-config";
 import { useEditorData } from "./useEditorData";
 import EditorLeft from "./components/EditorLeft";
+import Editorevent from "./editor-event"
 import './iconfont.js'
 
 export default defineComponent({
@@ -22,7 +23,7 @@ export default defineComponent({
     const previewRef = ref(false);
     const editorRef = ref(true);
 
-    const { currentPageData, savePageData } = useEditorData();
+    const { currentPageData, savePageData,pageList } = useEditorData();
     const data = currentPageData;
 
     const containerStyles = computed(() => ({
@@ -224,12 +225,15 @@ export default defineComponent({
                 ></EditorOperator>
               </ElTabPane>
               <ElTabPane label="事件" name="events">
-                {lastSelectBlock.value ? (
-                  <ElButton>点击事件</ElButton>
-                ) : (
-                  "EmptyText"
-                )}
-              </ElTabPane>
+                        
+                        <Editorevent
+                          block={lastSelectBlock.value}
+                          data={data.value}
+                          pageList={pageList.value}
+                          updateBlock={commands.updateBlock}
+                        ></Editorevent>
+                       
+                      </ElTabPane>
               <ElTabPane label="动画" name="animates">
                 {lastSelectBlock.value ? (
                   <ElButton>fade效果</ElButton>
