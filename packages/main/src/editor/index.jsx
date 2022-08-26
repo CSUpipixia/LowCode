@@ -115,7 +115,9 @@ export default defineComponent({
         label: "运行",
         icon: "icon-yunhang",
         // 跳转到应用部署地址
-        handler: () => {},
+        handler: () => {
+          window.open(import.meta.env.VITE_DEPLOY_URL)
+        },
       },
     ];
 
@@ -237,13 +239,6 @@ export default defineComponent({
                   pageList={pageList.value}
                   updateBlock={commands.updateBlock}
                 ></Editorevent>
-              </ElTabPane>
-              <ElTabPane label="动画" name="animates">
-                {lastSelectBlock.value ? (
-                  <ElButton>fade效果</ElButton>
-                ) : (
-                  "EmptyText"
-                )}
               </ElTabPane>
             </ElTabs>
           </div>

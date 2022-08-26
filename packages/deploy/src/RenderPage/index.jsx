@@ -25,6 +25,7 @@ export default defineComponent({
       document.title = page.title;
       router.replace(`/${page.path}`);
       pageData.value = page.pageData;
+      console.log("pageData", pageData.value)
     }
 
     initData();
