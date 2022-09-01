@@ -116,6 +116,7 @@ export function useCommand(data, focusData) {
             }
         }
     });
+    
     // 带有历史记录常用的模式 
     registry({
         name: 'updateContainer', // 更新整个容器
